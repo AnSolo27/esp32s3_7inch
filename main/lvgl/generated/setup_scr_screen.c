@@ -110,7 +110,7 @@ char screen_digital_clock_1_meridiem[] = "AM";void setup_scr_screen(lv_ui *ui)
 
 	//Write codes screen_label_4
 	ui->screen_label_4 = lv_label_create(ui->screen);
-	lv_label_set_text(ui->screen_label_4, "Температура: 140");
+	lv_label_set_text(ui->screen_label_4, "Температура: 147");
 	lv_label_set_long_mode(ui->screen_label_4, LV_LABEL_LONG_WRAP);
 	lv_obj_set_pos(ui->screen_label_4, 168, 416);
 	lv_obj_set_size(ui->screen_label_4, 186, 32);

@@ -6,6 +6,8 @@
     "idf.portWin": "COM100",
     "idf.flashType": "UART",
     "files.associations": {
-        "gui_guider.h": "c"
+        "gui_guider.h": "c",
+        "lvgl.h": "c",
+        "lv_slider.h": "c"
     }
 }
