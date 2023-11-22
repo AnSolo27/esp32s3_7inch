@@ -19,7 +19,21 @@
 int screen_digital_clock_1_min_value = 25;
 int screen_digital_clock_1_hour_value = 11;
 int screen_digital_clock_1_sec_value = 50;
-char screen_digital_clock_1_meridiem[] = "AM";void setup_scr_screen(lv_ui *ui)
+char screen_digital_clock_1_meridiem[] = "AM";
+
+static void meter_cb(lv_event_t * e) {
+
+	lv_obj_draw_part_dsc_t	*dsc  = (lv_obj_draw_part_dsc_t *)lv_event_get_param(e);
+	int	value;
+
+	if( dsc->text != NULL ) {		// Filter major ticks...
+		value = dsc->value / 10;
+		sprintf(dsc->text, "%d", value);
+	}
+
+}
+
+void setup_scr_screen(lv_ui *ui)
 {
 	//Write codes screen
 	ui->screen = lv_obj_create(NULL);
@@ -200,20 +214,12 @@ char screen_digital_clock_1_meridiem[] = "AM";void setup_scr_screen(lv_ui *ui)
 	ui->screen_chart_1 = lv_chart_create(ui->screen);
 	lv_chart_set_type(ui->screen_chart_1, LV_CHART_TYPE_LINE);
 	lv_chart_set_div_line_count(ui->screen_chart_1, 3, 5);
-	lv_chart_set_point_count(ui->screen_chart_1, 5);
+	lv_chart_set_point_count(ui->screen_chart_1, 20);
 	lv_chart_set_range(ui->screen_chart_1, LV_CHART_AXIS_PRIMARY_Y, 0, 100);
 	lv_chart_set_range(ui->screen_chart_1, LV_CHART_AXIS_SECONDARY_Y, 0, 100);
 	lv_chart_set_zoom_x(ui->screen_chart_1, 256);
 	lv_chart_set_zoom_y(ui->screen_chart_1, 256);
-	lv_chart_series_t * screen_chart_1_0 = lv_chart_add_series(ui->screen_chart_1, lv_color_hex(0x000000), LV_CHART_AXIS_PRIMARY_Y);
-	lv_chart_set_next_value(ui->screen_chart_1, screen_chart_1_0, 1);
-	lv_chart_set_next_value(ui->screen_chart_1, screen_chart_1_0, 20);
-	lv_chart_set_next_value(ui->screen_chart_1, screen_chart_1_0, 30);
-	lv_chart_set_next_value(ui->screen_chart_1, screen_chart_1_0, 40);
-	lv_chart_set_next_value(ui->screen_chart_1, screen_chart_1_0, 5);
-	lv_obj_set_pos(ui->screen_chart_1, 152, 250);
-	lv_obj_set_size(ui->screen_chart_1, 205, 155);
-	lv_obj_set_scrollbar_mode(ui->screen_chart_1, LV_SCROLLBAR_MODE_OFF);
+	
 
 	//Write style for screen_chart_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_bg_opa(ui->screen_chart_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
@@ -239,12 +245,12 @@ char screen_digital_clock_1_meridiem[] = "AM";void setup_scr_screen(lv_ui *ui)
 	ui->screen_meter_1 = lv_meter_create(ui->screen);
 	// add scale screen_meter_1_scale_1
 	lv_meter_scale_t *screen_meter_1_scale_1 = lv_meter_add_scale(ui->screen_meter_1);
-	lv_meter_set_scale_ticks(ui->screen_meter_1, screen_meter_1_scale_1, 41, 2, 10, lv_color_hex(0xff0000));
-	lv_meter_set_scale_major_ticks(ui->screen_meter_1, screen_meter_1_scale_1, 8, 5, 15, lv_color_hex(0xffff00), 10);
-	lv_meter_set_scale_range(ui->screen_meter_1, screen_meter_1_scale_1, 0, 5, 300, 90);
+	lv_meter_set_scale_ticks(ui->screen_meter_1, screen_meter_1_scale_1, 5 * 5 + 1, 2, 5, lv_color_hex(LV_PALETTE_GREY));
+	lv_meter_set_scale_major_ticks(ui->screen_meter_1, screen_meter_1_scale_1, 5, 4, 15, lv_color_black(), 10);
+	lv_meter_set_scale_range(ui->screen_meter_1, screen_meter_1_scale_1, 0, 50, 300, 90);
 
 	// add needle line for screen_meter_1_scale_1.
-	ui->screen_meter_1_scale_1_ndline_0 = lv_meter_add_needle_line(ui->screen_meter_1, screen_meter_1_scale_1, 5, lv_color_hex(0x000000), -10);
+	ui->screen_meter_1_scale_1_ndline_0 = lv_meter_add_needle_line(ui->screen_meter_1, screen_meter_1_scale_1, 4, lv_color_hex(0x000000), -10);
 	lv_meter_set_indicator_value(ui->screen_meter_1, ui->screen_meter_1_scale_1_ndline_0, 0);
 	lv_obj_set_pos(ui->screen_meter_1, 180, 55);
 	lv_obj_set_size(ui->screen_meter_1, 148, 148);
@@ -263,6 +269,8 @@ char screen_digital_clock_1_meridiem[] = "AM";void setup_scr_screen(lv_ui *ui)
 	//Write style for screen_meter_1, Part: LV_PART_INDICATOR, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_bg_opa(ui->screen_meter_1, 255, LV_PART_INDICATOR|LV_STATE_DEFAULT);
 	lv_obj_set_style_bg_color(ui->screen_meter_1, lv_color_hex(0x000000), LV_PART_INDICATOR|LV_STATE_DEFAULT);
+
+	lv_obj_add_event_cb(ui->screen_meter_1, meter_cb, LV_EVENT_DRAW_PART_BEGIN, NULL);
 
 	//Write codes screen_led_1
 	ui->screen_led_1 = lv_led_create(ui->screen);
@@ -352,20 +360,12 @@ char screen_digital_clock_1_meridiem[] = "AM";void setup_scr_screen(lv_ui *ui)
 	ui->screen_chart_2 = lv_chart_create(ui->screen);
 	lv_chart_set_type(ui->screen_chart_2, LV_CHART_TYPE_LINE);
 	lv_chart_set_div_line_count(ui->screen_chart_2, 3, 5);
-	lv_chart_set_point_count(ui->screen_chart_2, 5);
+	lv_chart_set_point_count(ui->screen_chart_2, 20);
 	lv_chart_set_range(ui->screen_chart_2, LV_CHART_AXIS_PRIMARY_Y, 0, 100);
 	lv_chart_set_range(ui->screen_chart_2, LV_CHART_AXIS_SECONDARY_Y, 0, 100);
 	lv_chart_set_zoom_x(ui->screen_chart_2, 256);
 	lv_chart_set_zoom_y(ui->screen_chart_2, 256);
-	lv_chart_series_t * screen_chart_2_0 = lv_chart_add_series(ui->screen_chart_2, lv_color_hex(0x000000), LV_CHART_AXIS_PRIMARY_Y);
-	lv_chart_set_next_value(ui->screen_chart_2, screen_chart_2_0, 1);
-	lv_chart_set_next_value(ui->screen_chart_2, screen_chart_2_0, 20);
-	lv_chart_set_next_value(ui->screen_chart_2, screen_chart_2_0, 30);
-	lv_chart_set_next_value(ui->screen_chart_2, screen_chart_2_0, 40);
-	lv_chart_set_next_value(ui->screen_chart_2, screen_chart_2_0, 5);
-	lv_obj_set_pos(ui->screen_chart_2, 515, 261);
-	lv_obj_set_size(ui->screen_chart_2, 205, 155);
-	lv_obj_set_scrollbar_mode(ui->screen_chart_2, LV_SCROLLBAR_MODE_OFF);
+	
 
 	//Write style for screen_chart_2, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_bg_opa(ui->screen_chart_2, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
