@@ -3,7 +3,7 @@
     "idf.openOcdConfigs": [
         "board/esp32s3-builtin.cfg"
     ],
-    "idf.portWin": "COM100",
+    "idf.portWin": "COM2",
     "idf.flashType": "UART",
     "files.associations": {
         "gui_guider.h": "c",
