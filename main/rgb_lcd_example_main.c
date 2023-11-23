@@ -46,37 +46,10 @@ void app_main(void)
 }
 
 void Demo_Task(void *arg) {
-    lv_chart_series_t * screen_chart_1_0 = lv_chart_add_series(guider_ui.screen_chart_1, lv_color_hex(0x000000), LV_CHART_AXIS_PRIMARY_Y);
-	lv_obj_set_pos(guider_ui.screen_chart_1, 152, 250);
-	lv_obj_set_size(guider_ui.screen_chart_1, 205, 155);
-	lv_obj_set_scrollbar_mode(guider_ui.screen_chart_1, LV_SCROLLBAR_MODE_OFF);
 
-    lv_chart_series_t * screen_chart_2_0 = lv_chart_add_series(guider_ui.screen_chart_2, lv_color_hex(0x000000), LV_CHART_AXIS_PRIMARY_Y);
-	lv_obj_set_pos(guider_ui.screen_chart_2, 515, 261);
-	lv_obj_set_size(guider_ui.screen_chart_2, 205, 155);
-	lv_obj_set_scrollbar_mode(guider_ui.screen_chart_2, LV_SCROLLBAR_MODE_OFF);
-
-    int chart_1 = 0;
-    int chart_2 = 100;
+    
     while(1){
-        ESP_LOGI(TAG, "Demo Task");
-        chart_1++;
-        chart_2--;
-        if (chart_2 == 0) {
-            chart_2 = 100;
-        }
-        if (chart_1 > 100) {
-            chart_1 = 0;
-        }
-        
-        lv_chart_set_next_value(guider_ui.screen_chart_1, screen_chart_1_0, chart_1);
 
-        lv_chart_set_next_value(guider_ui.screen_chart_2, screen_chart_2_0, chart_2);
-
-        lv_meter_set_indicator_value(guider_ui.screen_meter_1, guider_ui.screen_meter_1_scale_1_ndline_0, chart_1);
-
-        lv_chart_refresh(guider_ui.screen_chart_1);
-        lv_chart_refresh(guider_ui.screen_chart_2);
         vTaskDelay(pdMS_TO_TICKS(100));
     }
 }

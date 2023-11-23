@@ -10,6 +10,7 @@
         "lvgl.h": "c",
         "lv_slider.h": "c",
         "sdkconfig.h": "c",
-        "display.h": "c"
+        "display.h": "c",
+        "widgets_init.h": "c"
     }
 }
