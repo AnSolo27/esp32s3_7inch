@@ -9,6 +9,7 @@
         "gui_guider.h": "c",
         "lvgl.h": "c",
         "lv_slider.h": "c",
-        "sdkconfig.h": "c"
+        "sdkconfig.h": "c",
+        "display.h": "c"
     }
 }
