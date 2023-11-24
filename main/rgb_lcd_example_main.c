@@ -50,6 +50,7 @@ void app_main(void)
     //ESP_ERROR_CHECK(esp_event_loop_create_default());
     wifi_init_sta();
     display_init(&guider_ui);
+    
 
     vTaskDelay(pdMS_TO_TICKS(1000));
     xTaskCreatePinnedToCore(Demo_Task, "Demo_Task", 4096, NULL, 10, &myTaskHandle, 0);

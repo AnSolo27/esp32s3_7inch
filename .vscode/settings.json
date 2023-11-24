@@ -11,6 +11,9 @@
         "lv_slider.h": "c",
         "sdkconfig.h": "c",
         "display.h": "c",
-        "widgets_init.h": "c"
+        "widgets_init.h": "c",
+        "esp_lcd_panel_io.h": "c",
+        "esp_lcd_panel_vendor.h": "c",
+        "esp_lcd_panel_ops.h": "c"
     }
 }
