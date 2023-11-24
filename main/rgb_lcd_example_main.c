@@ -66,7 +66,8 @@ void app_main(void)
 /* Constants that aren't configurable in menuconfig */
 #define WEB_SERVER "service-asteri-el.com"
 #define WEB_PORT "16017"
-#define WEB_PATH "/getSettings?_sn_=0012345600033124"
+#define WEB_PATH "sendStatus?_sn_=0012345600033124&_status_=1,1&_temp_=3"
+
 
 static const char *REQUEST = "GET " WEB_PATH " HTTP/1.0\r\n"
     "Host: "WEB_SERVER":"WEB_PORT"\r\n"
