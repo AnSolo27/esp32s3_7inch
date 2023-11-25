@@ -15,7 +15,8 @@
         "esp_lcd_panel_io.h": "c",
         "esp_lcd_panel_vendor.h": "c",
         "esp_lcd_panel_ops.h": "c",
-        "esp_lcd_touch_gt911.h": "c"
+        "esp_lcd_touch_gt911.h": "c",
+        "nimble_port.h": "c"
     },
     "idf.toolsPathWin": "C:\\Projects\\esp-idf\\v5.1.2\\tools",
     "idf.espIdfPathWin": "c:\\Projects\\esp-idf\\v5.1.2\\esp-idf"

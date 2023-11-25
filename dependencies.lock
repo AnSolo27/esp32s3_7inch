@@ -28,12 +28,12 @@ dependencies:
       service_url: https://api.components.espressif.com/
       type: service
     version: 8.3.10
-  nimble_peripheral_utils:
+  nimble_central_utils:
     component_hash: null
     source:
-      path: C:\Projects\esp-idf\v5.1.2\esp-idf\examples\bluetooth\nimble\common\nimble_peripheral_utils
+      path: C:\Projects\esp-idf\v5.1.2\esp-idf\examples\bluetooth\nimble\common\nimble_central_utils
       type: local
     version: '*'
-manifest_hash: ad65391992cedd3e3ac35721efa9eaa9de0d87e6fbcdede397bb8d612a9a7fe8
+manifest_hash: 68a736bdfddbcfd443fbeae70355ea51e57f3d9739d962da7b23cf0ef25e1787
 target: esp32s3
 version: 1.0.0
