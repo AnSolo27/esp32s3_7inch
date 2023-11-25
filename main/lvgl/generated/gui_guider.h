@@ -20,19 +20,7 @@ typedef struct
   
 	lv_obj_t *screen_main;
 	bool screen_main_del;
-	lv_obj_t *screen_main_ddlist_1;
-	lv_obj_t *screen_main_qrcode_1;
-	lv_obj_t *screen_main_menu_1;
-	lv_obj_t *screen_main_menu_1_sidebar_page;
-	lv_obj_t *screen_main_menu_1_subpage_1;
-	lv_obj_t *screen_main_menu_1_cont_1;
-	lv_obj_t *screen_main_menu_1_label_1;
-	lv_obj_t *screen_main_menu_1_subpage_2;
-	lv_obj_t *screen_main_menu_1_cont_2;
-	lv_obj_t *screen_main_menu_1_label_2;
-	lv_obj_t *screen_main_menu_1_subpage_3;
-	lv_obj_t *screen_main_menu_1_cont_3;
-	lv_obj_t *screen_main_menu_1_label_3;
+	lv_obj_t *screen_main_table_1;
 	lv_obj_t *screen_1;
 	bool screen_1_del;
 }lv_ui;

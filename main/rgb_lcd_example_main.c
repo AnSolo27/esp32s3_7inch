@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: CC0-1.0
  */
 
+
+
 #include <stdio.h>
 #include "sdkconfig.h"
 #include "freertos/FreeRTOS.h"
@@ -35,6 +37,7 @@
 #include "sdkconfig.h"
 
 #include "wifi_sta.h"
+#include "ble_task.h"
 
 
 
@@ -128,8 +131,8 @@ ble_spp_client_scan(void)
     disc_params.passive = 0;
 
     /* Use defaults for the rest of the parameters. */
-    disc_params.itvl = 0;
-    disc_params.window = 0;
+    disc_params.itvl = 10;
+    disc_params.window = 10;
     disc_params.filter_policy = 0;
     disc_params.limited = 0;
 
@@ -170,6 +173,7 @@ ble_spp_client_should_connect(const struct ble_gap_disc_desc *disc)
         //if (memcmp(name, "AM", 2) == 0) {
             memcpy(name, fields.name, fields.name_len);
             ESP_LOGI(tag, "%s %d", name, disc->rssi);
+            ble_add_device(name, disc->rssi);
         //}
         
     }
@@ -445,7 +449,7 @@ static void ble_spp_uart_init(void)
 lv_ui guider_ui;
 
 void Demo_Task(void *arg);
-void BLE_Task(void *arg);
+
 TaskHandle_t myTaskHandle = NULL;
 
 
@@ -490,7 +494,7 @@ void app_main(void)
 
 
     vTaskDelay(pdMS_TO_TICKS(1000));
-    //xTaskCreatePinnedToCore(Demo_Task, "Demo_Task", 4096, NULL, 10, &myTaskHandle, 0);
+    xTaskCreatePinnedToCore(BLE_Task, "Demo_Task", 4096, NULL, 10, &myTaskHandle, 0);
 
     while (1) {
         // raise the task priority of LVGL and/or reduce the handler period can improve the performance
@@ -498,15 +502,6 @@ void app_main(void)
         // The task running lv_timer_handler should have lower priority than that running `lv_tick_inc`
         lv_timer_handler();
     }
-}
-
-void BLE_Task(void *arg) {
-    while (1) {
-        vTaskDelay(pdMS_TO_TICKS(100));
-        /* code */
-    }
-    
-
 }
 
 /* Constants that aren't configurable in menuconfig */

@@ -432,15 +432,15 @@
 
 #define LV_USE_BAR 0
 
-#define LV_USE_BTN 1
+#define LV_USE_BTN 0
 
 #define LV_USE_BTNMATRIX 0
 
-#define LV_USE_CANVAS 1
+#define LV_USE_CANVAS 0
 
 #define LV_USE_CHECKBOX 0
 
-#define LV_USE_DROPDOWN 1
+#define LV_USE_DROPDOWN 0
 
 #define LV_USE_IMG 1
 
@@ -469,7 +469,7 @@
 #define LV_TEXTAREA_DEF_PWD_SHOW_TIME 1500
 #endif    /* LV_USE_TEXTAREA */
 
-#define LV_USE_TABLE 0
+#define LV_USE_TABLE 1
 
 /*==================
  * EXTRA COMPONENTS
@@ -510,7 +510,7 @@
 
 #define LV_USE_LIST 0
 
-#define LV_USE_MENU 1
+#define LV_USE_MENU 0
 
 #define LV_USE_METER 0
 
@@ -647,7 +647,7 @@
 #define LV_USE_GIF 0
 
 /*QR code library*/
-#define LV_USE_QRCODE 1
+#define LV_USE_QRCODE 0
 
 /*FreeType library*/
 #define LV_USE_FREETYPE 0

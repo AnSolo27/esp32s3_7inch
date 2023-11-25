@@ -7,36 +7,26 @@
 * terms, then you may not retain, install, activate or otherwise use the software.
 */
 
-#ifndef GUI_GUIDER_H
-#define GUI_GUIDER_H
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "lvgl.h"
+#include <stdio.h>
+#include "gui_guider.h"
+#include "events_init.h"
+#include "widgets_init.h"
+#include "custom.h"
 
-typedef struct
+
+void setup_scr_screen_1(lv_ui *ui)
 {
-  
-	lv_obj_t *screen_main;
-	bool screen_main_del;
-	lv_obj_t *screen_main_table_1;
-	lv_obj_t *screen_1;
-	bool screen_1_del;
-}lv_ui;
+	//Write codes screen_1
+	ui->screen_1 = lv_obj_create(NULL);
+	lv_obj_set_size(ui->screen_1, 800, 480);
 
-void ui_init_style(lv_style_t * style);
-void init_scr_del_flag(lv_ui *ui);
-void setup_ui(lv_ui *ui);
-extern lv_ui guider_ui;
-
-void setup_scr_screen_main(lv_ui *ui);
-void setup_scr_screen_1(lv_ui *ui);
-
-LV_FONT_DECLARE(lv_font_montserratMedium_12)
+	//Write style for screen_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
+	lv_obj_set_style_bg_opa(ui->screen_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 
 
-#ifdef __cplusplus
+	//Update current screen layout.
+	lv_obj_update_layout(ui->screen_1);
+
+	
 }
-#endif
-#endif
