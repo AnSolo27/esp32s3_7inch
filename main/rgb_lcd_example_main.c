@@ -448,9 +448,10 @@ static void ble_spp_uart_init(void)
 
 lv_ui guider_ui;
 
-void Demo_Task(void *arg);
+void WIFI_Task(void *arg);
 
-TaskHandle_t myTaskHandle = NULL;
+TaskHandle_t hBLE_Task = NULL;
+TaskHandle_t hWIFI_Task = NULL;
 
 
 void app_main(void)
@@ -494,7 +495,8 @@ void app_main(void)
 
 
     vTaskDelay(pdMS_TO_TICKS(1000));
-    xTaskCreatePinnedToCore(BLE_Task, "Demo_Task", 4096, NULL, 10, &myTaskHandle, 0);
+    xTaskCreatePinnedToCore(BLE_Task, "BLE_Task", 4096, NULL, 10, &hBLE_Task, 0);
+    xTaskCreatePinnedToCore(WIFI_Task, "WIFI_Task", 4096, NULL, 10, &hWIFI_Task, 0);
 
     while (1) {
         // raise the task priority of LVGL and/or reduce the handler period can improve the performance
@@ -514,7 +516,7 @@ static const char *REQUEST = "GET " WEB_PATH " HTTP/1.0\r\n"
     "Host: "WEB_SERVER":"WEB_PORT"\r\n"
     "\r\n";
 
-void Demo_Task(void *arg) {
+void WIFI_Task(void *arg) {
     const struct addrinfo hints = {
         .ai_family = AF_INET,
         .ai_socktype = SOCK_STREAM,
