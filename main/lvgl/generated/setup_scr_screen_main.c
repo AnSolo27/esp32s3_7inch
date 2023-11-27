@@ -28,26 +28,12 @@ void setup_scr_screen_main(lv_ui *ui)
 	//Write codes screen_main_table_1
 	ui->screen_main_table_1 = lv_table_create(ui->screen_main);
 	lv_table_set_col_cnt(ui->screen_main_table_1,2);
-	lv_table_set_row_cnt(ui->screen_main_table_1,9);
+	lv_table_set_row_cnt(ui->screen_main_table_1,12);
 	lv_table_set_cell_value(ui->screen_main_table_1,0,0,"Name");
-	lv_table_set_cell_value(ui->screen_main_table_1,1,0,"Apple");
-	lv_table_set_cell_value(ui->screen_main_table_1,2,0,"Banana");
-	lv_table_set_cell_value(ui->screen_main_table_1,3,0,"Citron");
-	lv_table_set_cell_value(ui->screen_main_table_1,4,0,"Name");
-	lv_table_set_cell_value(ui->screen_main_table_1,5,0,"Name");
-	lv_table_set_cell_value(ui->screen_main_table_1,6,0,"Name");
-	lv_table_set_cell_value(ui->screen_main_table_1,7,0,"Name");
-	lv_table_set_cell_value(ui->screen_main_table_1,8,0,"Name");
 	lv_table_set_cell_value(ui->screen_main_table_1,0,1,"RSSI");
-	lv_table_set_cell_value(ui->screen_main_table_1,1,1,"$1");
-	lv_table_set_cell_value(ui->screen_main_table_1,2,1,"$2");
-	lv_table_set_cell_value(ui->screen_main_table_1,3,1,"$3");
-	lv_table_set_cell_value(ui->screen_main_table_1,4,1,"Price");
-	lv_table_set_cell_value(ui->screen_main_table_1,5,1,"Price");
-	lv_table_set_cell_value(ui->screen_main_table_1,6,1,"Price");
-	lv_table_set_cell_value(ui->screen_main_table_1,7,1,"Price");
-	lv_table_set_cell_value(ui->screen_main_table_1,8,1,"Price");
-	lv_obj_set_pos(ui->screen_main_table_1, 207, 73);
+
+
+	lv_obj_set_pos(ui->screen_main_table_1, 207, 20);
 	lv_obj_set_scrollbar_mode(ui->screen_main_table_1, LV_SCROLLBAR_MODE_OFF);
 
 	//Write style for screen_main_table_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
