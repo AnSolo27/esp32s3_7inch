@@ -20,10 +20,15 @@ string empty_str = "empty";
 
 unordered_map<string, string> ble_devices;
 
+string to_search = "AM_02";
+
 void ble_add_device(char *name, int rssi) {
-    char tmp[32] = {0};
-    itoa(rssi, tmp, 10);
-    ble_devices[name] = tmp;
+    string name_tmp = name;
+    if (name_tmp.find(to_search) != string::npos) {    
+        char tmp[32] = {0};
+        itoa(rssi, tmp, 10);
+        ble_devices[name] = tmp;
+    }
 }
 
 static void event_handler(lv_event_t * e)
