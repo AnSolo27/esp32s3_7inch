@@ -44,7 +44,7 @@
 
 static const char *TAG = "main";
 
-
+void Draw_Task(void *arg);
 
 
 #include "esp_log.h"
@@ -457,7 +457,7 @@ void WIFI_Task(void *arg);
 TaskHandle_t hBLE_Task = NULL;
 TaskHandle_t hWIFI_Task = NULL;
 TaskHandle_t hSDCARD_Task = NULL;
-
+TaskHandle_t hDraw_Task = NULL;
 
 void app_main(void)
 {
@@ -501,12 +501,22 @@ void app_main(void)
 
     vTaskDelay(pdMS_TO_TICKS(1000));
     xTaskCreatePinnedToCore(BLE_Task, "BLE_Task", 4096, NULL, 10, &hBLE_Task, 0);
-    xTaskCreatePinnedToCore(WIFI_Task, "WIFI_Task", 4096, NULL, 10, &hWIFI_Task, 0);
-    xTaskCreatePinnedToCore(SDCARD_Task, "SDCARD_Task", 4096, NULL, 10, &hSDCARD_Task, 0);
+    xTaskCreatePinnedToCore(Draw_Task, "Draw_Task", 4096, NULL, 11, &hDraw_Task, 1);
+    //xTaskCreatePinnedToCore(WIFI_Task, "WIFI_Task", 4096, NULL, 10, &hWIFI_Task, 0);
+    //xTaskCreatePinnedToCore(SDCARD_Task, "SDCARD_Task", 4096, NULL, 10, &hSDCARD_Task, 0);
 
     while (1) {
         // raise the task priority of LVGL and/or reduce the handler period can improve the performance
         vTaskDelay(pdMS_TO_TICKS(10));
+        // The task running lv_timer_handler should have lower priority than that running `lv_tick_inc`
+    }
+}
+
+void Draw_Task(void *arg) {
+
+    while (1) {
+        // raise the task priority of LVGL and/or reduce the handler period can improve the performance
+        vTaskDelay(pdMS_TO_TICKS(4));
         // The task running lv_timer_handler should have lower priority than that running `lv_tick_inc`
         lv_timer_handler();
     }

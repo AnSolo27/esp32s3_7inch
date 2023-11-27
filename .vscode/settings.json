@@ -36,7 +36,8 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "string_view": "cpp",
-        "esp_vfs_fat.h": "c"
+        "esp_vfs_fat.h": "c",
+        "algorithm": "cpp"
     },
     "idf.toolsPathWin": "C:\\Projects\\esp-idf\\v5.1.2\\tools",
     "idf.espIdfPathWin": "c:\\Projects\\esp-idf\\v5.1.2\\esp-idf"

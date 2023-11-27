@@ -28,12 +28,12 @@ void setup_scr_screen_main(lv_ui *ui)
 	//Write codes screen_main_table_1
 	ui->screen_main_table_1 = lv_table_create(ui->screen_main);
 	lv_table_set_col_cnt(ui->screen_main_table_1,2);
-	lv_table_set_row_cnt(ui->screen_main_table_1,12);
+	lv_table_set_row_cnt(ui->screen_main_table_1,11);
 	lv_table_set_cell_value(ui->screen_main_table_1,0,0,"Name");
 	lv_table_set_cell_value(ui->screen_main_table_1,0,1,"RSSI");
 
 
-	lv_obj_set_pos(ui->screen_main_table_1, 207, 20);
+	lv_obj_set_pos(ui->screen_main_table_1, 207, 1);
 	lv_obj_set_scrollbar_mode(ui->screen_main_table_1, LV_SCROLLBAR_MODE_OFF);
 
 	//Write style for screen_main_table_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.

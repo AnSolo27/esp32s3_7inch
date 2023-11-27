@@ -9,6 +9,7 @@ static const char *TAG = "BLE_TASK";
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
 
 
 using namespace std;
@@ -35,9 +36,16 @@ static void event_handler(lv_event_t * e)
             lv_table_set_cell_value(guider_ui.screen_main_table_1, i, 0, "empty");
             lv_table_set_cell_value(guider_ui.screen_main_table_1, i, 1, "0");
             i++;
+            if (i > 10) {
+                break;
+            }
         }
         ble_devices.clear();
     }
+}
+
+bool comp(pair<string,string> a, pair<string,string> b) {
+    return atoi(a.second.c_str()) > atoi(b.second.c_str());
 }
 
 
@@ -46,17 +54,22 @@ void BLE_Task(void *arg) {
     
     while (1) {
         int i = 1;
-        for (auto dev : ble_devices) {
-            lv_table_set_cell_value(guider_ui.screen_main_table_1, i, 0, dev.first.c_str());
-            lv_table_set_cell_value(guider_ui.screen_main_table_1, i, 1, dev.second.c_str());
+        vector<std::pair<string, string>> elems(ble_devices.begin(), ble_devices.end());
+        sort(elems.begin(), elems.end(), comp);
+        for (auto el : elems) {
+            lv_table_set_cell_value(guider_ui.screen_main_table_1, i, 0, el.first.c_str());
+            lv_table_set_cell_value(guider_ui.screen_main_table_1, i, 1, el.second.c_str());
             i++;
+            if (i > 10) {
+                break;
+            }
         }
         if (ble_devices.size() > 0) {
             
 
         }
 
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(2000));
         /* code */
     }
     
