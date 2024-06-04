@@ -3,7 +3,7 @@
     "idf.openOcdConfigs": [
         "board/esp32s3-builtin.cfg"
     ],
-    "idf.portWin": "COM12",
+    "idf.portWin": "COM28",
     "idf.flashType": "UART",
     "files.associations": {
         "gui_guider.h": "c",
@@ -39,6 +39,6 @@
         "esp_vfs_fat.h": "c",
         "algorithm": "cpp"
     },
-    "idf.toolsPathWin": "C:\\Projects\\esp-idf\\v5.1.2\\tools",
-    "idf.espIdfPathWin": "c:\\Projects\\esp-idf\\v5.1.2\\esp-idf"
+    "idf.toolsPathWin": "C:\\Projects\\esp-idf\\tools",
+    "idf.espIdfPathWin": "C:\\Projects\\esp-idf\\v5.3\\esp-idf"
 }
