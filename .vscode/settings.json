@@ -40,5 +40,7 @@
         "algorithm": "cpp"
     },
     "idf.toolsPathWin": "C:\\Projects\\esp-idf\\tools",
-    "idf.espIdfPathWin": "C:\\Projects\\esp-idf\\v5.3\\esp-idf"
+    "idf.espIdfPathWin": "C:\\Projects\\esp-idf\\v5.3\\esp-idf",
+    "editor.formatOnSave": true,
+    "python.analysis.autoImportCompletions": true,
 }
