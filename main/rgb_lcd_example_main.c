@@ -38,6 +38,8 @@
 #include "ble_task.h"
 #include "sdcard_task.h"
 
+#include "ble_pult_task.h"
+
 static const char* TAG = "main";
 
 void Draw_Task(void* arg);
@@ -490,42 +492,14 @@ void app_main(void) {
     //ESP_ERROR_CHECK(esp_event_loop_create_default());
     wifi_init_sta();
 
+    ble_pult_task_create(4096, 12);
+
     display_init(&guider_ui);
 
     int rc;
     /* Initialize NVS — it is used to store PHY calibration data */
     esp_err_t ret;
 
-    ret = nimble_port_init();
-    if(ret != ESP_OK) {
-        MODLOG_DFLT(ERROR, "Failed to init nimble %d \n", ret);
-        return;
-    }
-
-    /* Initialize UART driver and start uart task */
-    ble_spp_uart_init();
-
-    /* Configure the host. */
-    ble_hs_cfg.reset_cb = ble_spp_client_on_reset;
-    ble_hs_cfg.sync_cb = ble_spp_client_on_sync;
-    ble_hs_cfg.store_status_cb = ble_store_util_status_rr;
-
-    /* Initialize data structures to track connected peers. */
-    rc = peer_init(MYNEWT_VAL(BLE_MAX_CONNECTIONS), 64, 64, 64);
-    assert(rc == 0);
-
-    /* Set the default device name. */
-    rc = ble_svc_gap_device_name_set("nimble-ble-spp-client");
-    assert(rc == 0);
-
-    /* XXX Need to have template for store */
-    ble_store_config_init();
-
-    nimble_port_freertos_init(ble_spp_client_host_task);
-
-    vTaskDelay(pdMS_TO_TICKS(1000));
-    xTaskCreatePinnedToCore(
-        BLE_Task, "BLE_Task", 4096, NULL, 10, &hBLE_Task, 0);
     xTaskCreatePinnedToCore(
         Draw_Task, "Draw_Task", 4096, NULL, 11, &hDraw_Task, 1);
     //xTaskCreatePinnedToCore(WIFI_Task, "WIFI_Task", 4096, NULL, 10, &hWIFI_Task, 0);
