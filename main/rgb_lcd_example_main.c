@@ -16,8 +16,8 @@
 #include "esp_err.h"
 #include "esp_log.h"
 #include "lvgl.h"
-#include "lvgl/generated/gui_guider.h"
-#include "lvgl/generated/events_init.h"
+//#include "lvgl/generated/gui_guider.h"
+//#include "lvgl/generated/events_init.h"
 
 #include "display.h"
 
@@ -41,6 +41,8 @@ void Draw_Task(void* arg);
 
 #include "driver/uart.h"
 
+#include "lvgl/src/ui/ui.h"
+
 /*
 GPIO
 
@@ -58,7 +60,7 @@ GPIO
 
 */
 
-lv_ui guider_ui;
+//lv_ui guider_ui;
 
 void WIFI_Task(void* arg);
 
@@ -100,6 +102,10 @@ int sendData(const char* logName, const char* data) {
     return txBytes;
 }
 
+void action_test(lv_event_t* e) {
+    ESP_LOGI(TAG, "action");
+}
+
 void app_main(void) {
     //ESP_ERROR_CHECK(esp_netif_init());
     //ESP_ERROR_CHECK(esp_event_loop_create_default());
@@ -107,7 +113,8 @@ void app_main(void) {
 
     ble_pult_task_create(4096, 12);
 
-    display_init(&guider_ui);
+    display_init();
+    ui_init();
 
     int rc;
     /* Initialize NVS — it is used to store PHY calibration data */
@@ -121,10 +128,18 @@ void app_main(void) {
 
     init();
     while(1) {
-        vTaskDelay(pdMS_TO_TICKS(500));
+        /*
+        uint32_t event_cnt =
+            lv_obj_get_event_count(guider_ui.screen_main_spinbox_1);
+        for(int i = 0; i < event_cnt; i++) {
+            lv_event_dsc_t* event_dsc =
+                lv_obj_get_event_dsc(guider_ui.screen_main_spinbox_1, i);
+        }
+        */
+        vTaskDelay(pdMS_TO_TICKS(5000));
         free_heap = xPortGetFreeHeapSize();
         //ESP_LOGI(TAG, "rtos free heap %u", free_heap);
-        sendData(TAG, "Hello world");
+        //sendData(TAG, "Hello world");
     }
 }
 

@@ -1,15 +1,10 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-
 #include "esp_lcd_panel_ops.h"
 #include "esp_lcd_panel_rgb.h"
 
 #include "lvgl.h"
-#include "lvgl/generated/gui_guider.h"
-
-
-void display_init(lv_ui *guider_ui);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////// Please update the following configuration according to your LCD spec //////////////////////////////
@@ -33,23 +28,25 @@ void display_init(lv_ui *guider_ui);
 #define EXAMPLE_PIN_NUM_DATA8          8 // G3
 #define EXAMPLE_PIN_NUM_DATA9          16 // G4
 #define EXAMPLE_PIN_NUM_DATA10         1 // G5
-#define EXAMPLE_PIN_NUM_DATA11         14  // R0
-#define EXAMPLE_PIN_NUM_DATA12         21  // R1
+#define EXAMPLE_PIN_NUM_DATA11         14 // R0
+#define EXAMPLE_PIN_NUM_DATA12         21 // R1
 #define EXAMPLE_PIN_NUM_DATA13         47 // R2
 #define EXAMPLE_PIN_NUM_DATA14         48 // R3
 #define EXAMPLE_PIN_NUM_DATA15         45 // R4
 #define EXAMPLE_PIN_NUM_DISP_EN        -1
 
 // The pixel number in horizontal and vertical
-#define EXAMPLE_LCD_H_RES              800
-#define EXAMPLE_LCD_V_RES              480
+#define EXAMPLE_LCD_H_RES 800
+#define EXAMPLE_LCD_V_RES 480
 
 #if CONFIG_EXAMPLE_DOUBLE_FB
-#define EXAMPLE_LCD_NUM_FB             2
+#define EXAMPLE_LCD_NUM_FB 2
 #else
-#define EXAMPLE_LCD_NUM_FB             1
+#define EXAMPLE_LCD_NUM_FB 1
 #endif // CONFIG_EXAMPLE_DOUBLE_FB
 
-#define EXAMPLE_LVGL_TICK_PERIOD_MS    2
+#define EXAMPLE_LVGL_TICK_PERIOD_MS 2
+
+void display_init();
 
 #endif /* DISPLAY_H */
