@@ -30,6 +30,7 @@
 #include "wifi_sta.h"
 #include "ble_task.h"
 #include "sdcard_task.h"
+#include "mcu_uart_task.h"
 
 #include "ble_pult_task.h"
 
@@ -42,6 +43,7 @@ void Draw_Task(void* arg);
 #include "driver/uart.h"
 
 #include "lvgl/src/ui/ui.h"
+#include "lvgl/src/ui/vars.h"
 
 /*
 GPIO
@@ -68,32 +70,7 @@ TaskHandle_t hBLE_Task = NULL;
 TaskHandle_t hWIFI_Task = NULL;
 TaskHandle_t hSDCARD_Task = NULL;
 TaskHandle_t hDraw_Task = NULL;
-
-#define TXD_PIN (GPIO_NUM_17)
-#define RXD_PIN (GPIO_NUM_18)
-
-static const int RX_BUF_SIZE = 1024;
-
-/*
-115200 - 5*200us
-921600 - 1.5*200us
-*/
-
-void init(void) {
-    const uart_config_t uart_config = {
-        .baud_rate = 921600,
-        .data_bits = UART_DATA_8_BITS,
-        .parity = UART_PARITY_DISABLE,
-        .stop_bits = UART_STOP_BITS_1,
-        .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
-        .source_clk = UART_SCLK_DEFAULT,
-    };
-    // We won't use a buffer for sending data.
-    uart_driver_install(UART_NUM_1, RX_BUF_SIZE * 2, 0, 0, NULL, 0);
-    uart_param_config(UART_NUM_1, &uart_config);
-    uart_set_pin(
-        UART_NUM_1, TXD_PIN, RXD_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
-}
+TaskHandle_t hMCU_UART_Task = NULL;
 
 int sendData(const char* logName, const char* data) {
     const int len = strlen(data);
@@ -102,8 +79,24 @@ int sendData(const char* logName, const char* data) {
     return txBytes;
 }
 
-void action_test(lv_event_t* e) {
-    ESP_LOGI(TAG, "action");
+void action_btn_stop_ev(lv_event_t* e) {
+    ESP_LOGI(TAG, "action_btn_stop_ev");
+    loadScreen(SCREEN_ID_MAIN);
+}
+
+void action_btn_run_ev(lv_event_t* e) {
+    ESP_LOGI(TAG, "action_btn_run_ev");
+    loadScreen(SCREEN_ID_PAGE_PROCESS);
+}
+
+int32_t meter_cnt = 0;
+
+void set_var_meter_cnt(int32_t value) {
+    meter_cnt = value;
+}
+
+int32_t get_var_meter_cnt() {
+    return meter_cnt;
 }
 
 void app_main(void) {
@@ -125,8 +118,11 @@ void app_main(void) {
     //xTaskCreatePinnedToCore(WIFI_Task, "WIFI_Task", 4096, NULL, 10, &hWIFI_Task, 0);
     //xTaskCreatePinnedToCore(SDCARD_Task, "SDCARD_Task", 4096, NULL, 10, &hSDCARD_Task, 0);
     size_t free_heap = 0;
+    int i = 0;
 
-    init();
+    uint8_t buf[32] = {0};
+
+    mcu_uart_task_create(1024 * 4, configMAX_PRIORITIES - 1);
     while(1) {
         /*
         uint32_t event_cnt =
@@ -136,10 +132,16 @@ void app_main(void) {
                 lv_obj_get_event_dsc(guider_ui.screen_main_spinbox_1, i);
         }
         */
-        vTaskDelay(pdMS_TO_TICKS(5000));
+        set_var_meter_cnt(i++);
+        tick_screen(1);
+        vTaskDelay(pdMS_TO_TICKS(1000));
         free_heap = xPortGetFreeHeapSize();
-        //ESP_LOGI(TAG, "rtos free heap %u", free_heap);
-        //sendData(TAG, "Hello world");
+        ESP_LOGI(TAG, "rtos free heap %u", free_heap);
+
+        ESP_LOGI(
+            TAG,
+            "uart free heap %u",
+            uxTaskGetStackHighWaterMark(hMCU_UART_Task) * sizeof(StackType_t));
     }
 }
 

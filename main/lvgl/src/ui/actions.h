@@ -7,7 +7,8 @@
 extern "C" {
 #endif
 
-extern void action_test(lv_event_t * e);
+extern void action_btn_run_ev(lv_event_t * e);
+extern void action_btn_stop_ev(lv_event_t * e);
 
 
 #ifdef __cplusplus
