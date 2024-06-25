@@ -33,6 +33,7 @@
 #include "mcu_uart_task.h"
 
 #include "ble_pult_task.h"
+#include "gui_task.h"
 
 static const char* TAG = "main";
 
@@ -79,32 +80,12 @@ int sendData(const char* logName, const char* data) {
     return txBytes;
 }
 
-void action_btn_stop_ev(lv_event_t* e) {
-    ESP_LOGI(TAG, "action_btn_stop_ev");
-    loadScreen(SCREEN_ID_MAIN);
-}
-
-void action_btn_run_ev(lv_event_t* e) {
-    ESP_LOGI(TAG, "action_btn_run_ev");
-    loadScreen(SCREEN_ID_PAGE_PROCESS);
-}
-
-int32_t meter_cnt = 0;
-
-void set_var_meter_cnt(int32_t value) {
-    meter_cnt = value;
-}
-
-int32_t get_var_meter_cnt() {
-    return meter_cnt;
-}
-
 void app_main(void) {
     //ESP_ERROR_CHECK(esp_netif_init());
     //ESP_ERROR_CHECK(esp_event_loop_create_default());
     wifi_init_sta();
 
-    ble_pult_task_create(4096, 12);
+    ble_pult_task_create(4096, configMAX_PRIORITIES - 1);
 
     display_init();
     ui_init();
@@ -123,6 +104,7 @@ void app_main(void) {
     uint8_t buf[32] = {0};
 
     mcu_uart_task_create(1024 * 4, configMAX_PRIORITIES - 1);
+    gui_task_create(1024 * 4, configMAX_PRIORITIES - 1);
     while(1) {
         /*
         uint32_t event_cnt =
@@ -132,16 +114,19 @@ void app_main(void) {
                 lv_obj_get_event_dsc(guider_ui.screen_main_spinbox_1, i);
         }
         */
-        set_var_meter_cnt(i++);
-        tick_screen(1);
+
+        //tick_screen(0);
+
         vTaskDelay(pdMS_TO_TICKS(1000));
         free_heap = xPortGetFreeHeapSize();
+        /*
         ESP_LOGI(TAG, "rtos free heap %u", free_heap);
 
         ESP_LOGI(
             TAG,
             "uart free heap %u",
             uxTaskGetStackHighWaterMark(hMCU_UART_Task) * sizeof(StackType_t));
+            */
     }
 }
 

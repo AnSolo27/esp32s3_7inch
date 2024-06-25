@@ -10,8 +10,24 @@ extern "C" {
 typedef struct _objects_t {
     lv_obj_t *main;
     lv_obj_t *page_process;
+    lv_obj_t *btn_main_run;
+    lv_obj_t *btn_p_bot_dec;
+    lv_obj_t *btn_p_bot_inc;
+    lv_obj_t *btn_p_top_dec;
+    lv_obj_t *btn_p_top_inc;
+    lv_obj_t *btn_process_stop;
+    lv_obj_t *btn_t_bot_dec;
+    lv_obj_t *btn_t_bot_inc;
+    lv_obj_t *btn_t_top_dec;
+    lv_obj_t *btn_t_top_inc;
+    lv_obj_t *meter_p_bot;
+    lv_obj_t *meter_p_top;
     lv_obj_t *obj0;
     lv_obj_t *obj1;
+    lv_obj_t *obj2;
+    lv_obj_t *obj3;
+    lv_obj_t *obj4;
+    lv_obj_t *obj5;
     lv_obj_t *vulc_meter;
 } objects_t;
 

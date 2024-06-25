@@ -90,7 +90,9 @@ void uart_init(void) {
 #define ASP_CMD_GET_FW_VER 0x05
 #define ASP_CMD_RESET      0x13
 
-#define ASP_CMD_READ_PARAM  0xA0
+#define ASP_CMD_GET_FW_VER 0x0
+
+#define DISP_CMD_BTN_H      0xA0
 #define ASP_CMD_WRITE_PARAM 0xA1
 
 #define DISPLAY_MIN_MSG_SIZE 6U
@@ -106,6 +108,15 @@ void mcu_uart_answer_fw_ver(void) {
         PATCH,
         0x00,
         0x00};
+    tx_buf[1] = (uint8_t)(sizeof(tx_buf) >> 8);
+    tx_buf[2] = (uint8_t)(sizeof(tx_buf));
+    //get_crc_and_write(tx_buf, sizeof(tx_buf) - 2, &tx_buf[sizeof(tx_buf) - 2]);
+    uart_write_bytes(UART_NUM_1, tx_buf, sizeof(tx_buf));
+}
+
+void mcu_uart_btn_pressed(uint8_t screen, uint8_t btn) {
+    uint8_t tx_buf[] = {
+        HEADER_ANSWER, 0x00, 0x00, DISP_CMD_BTN_H, screen, btn, 0x00, 0x00};
     tx_buf[1] = (uint8_t)(sizeof(tx_buf) >> 8);
     tx_buf[2] = (uint8_t)(sizeof(tx_buf));
     //get_crc_and_write(tx_buf, sizeof(tx_buf) - 2, &tx_buf[sizeof(tx_buf) - 2]);
@@ -145,8 +156,7 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
                     break;
 
                 case ASP_CMD_RESET:
-                    //display_send_status(cmd, 1);
-                    //NVIC_SystemReset();
+                    esp_cpu_reset(0);
                     break;
 
                 case ASP_CMD_GET_SN:
