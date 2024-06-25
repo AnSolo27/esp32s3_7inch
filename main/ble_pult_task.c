@@ -15,6 +15,8 @@
 #include "services/gap/ble_svc_gap.h"
 #include "blecent.h"
 
+#include "driver/temperature_sensor.h"
+
 #include "settings.h"
 
 /**********Extern**********/
@@ -725,7 +727,24 @@ static void ble_pult_task(void* arg) {
     ble_store_config_init();
 
     nimble_port_freertos_init(blecent_host_task);
+    ESP_LOGI(
+        tag, "Install temperature sensor, expected temp ranger range: 10~50 ℃");
+    temperature_sensor_handle_t temp_sensor = NULL;
+    temperature_sensor_config_t temp_sensor_config =
+        TEMPERATURE_SENSOR_CONFIG_DEFAULT(10, 50);
+    ESP_ERROR_CHECK(
+        temperature_sensor_install(&temp_sensor_config, &temp_sensor));
+
+    ESP_LOGI(tag, "Enable temperature sensor");
+    ESP_ERROR_CHECK(temperature_sensor_enable(temp_sensor));
+
+    ESP_LOGI(tag, "Read temperature");
+    int cnt = 20;
+    float tsens_value;
     while(1) {
-        vTaskDelay(pdMS_TO_TICKS(2000));
+        vTaskDelay(pdMS_TO_TICKS(20000));
+        ESP_ERROR_CHECK(
+            temperature_sensor_get_celsius(temp_sensor, &tsens_value));
+        ESP_LOGI(tag, "Temperature value %.02f ℃", tsens_value);
     }
 }
