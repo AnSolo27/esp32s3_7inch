@@ -227,7 +227,14 @@
             "childStyles": []
           },
           "timeline": [],
-          "eventHandlers": [],
+          "eventHandlers": [
+            {
+              "objID": "22c41c53-c177-4fad-d007-fbfa41e98cea",
+              "eventName": "SCREEN_LOADED",
+              "handlerType": "action",
+              "action": "event_btn_main_scr"
+            }
+          ],
           "leftUnit": "px",
           "topUnit": "px",
           "widthUnit": "px",
@@ -1336,7 +1343,14 @@
             "childStyles": []
           },
           "timeline": [],
-          "eventHandlers": [],
+          "eventHandlers": [
+            {
+              "objID": "480695fe-bed3-422a-9e6d-4993ce9e4643",
+              "eventName": "SCREEN_LOADED",
+              "handlerType": "action",
+              "action": "event_btn_process_scr"
+            }
+          ],
           "leftUnit": "px",
           "topUnit": "px",
           "widthUnit": "px",

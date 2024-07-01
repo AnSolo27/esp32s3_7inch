@@ -9,6 +9,13 @@
 objects_t objects;
 lv_obj_t* tick_value_change_obj;
 
+static void event_handler_cb_main_main(lv_event_t* e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    if(event == LV_EVENT_SCREEN_LOADED) {
+        action_event_btn_main_scr(e);
+    }
+}
+
 static void event_handler_cb_main_btn_p_top_inc(lv_event_t* e) {
     lv_event_code_t event = lv_event_get_code(e);
     if(event == LV_EVENT_PRESSED) {
@@ -93,6 +100,13 @@ static void event_handler_cb_main_meter_p_top(lv_event_t* e) {
     }
 }
 
+static void event_handler_cb_page_process_page_process(lv_event_t* e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    if(event == LV_EVENT_SCREEN_LOADED) {
+        action_event_btn_process_scr(e);
+    }
+}
+
 static void event_handler_cb_page_process_btn_process_stop(lv_event_t* e) {
     lv_event_code_t event = lv_event_get_code(e);
     if(event == LV_EVENT_RELEASED) {
@@ -112,6 +126,7 @@ void create_screen_main() {
     objects.main = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 800, 480);
+    lv_obj_add_event_cb(obj, event_handler_cb_main_main, LV_EVENT_ALL, 0);
     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
     {
         lv_obj_t* parent_obj = obj;
@@ -465,6 +480,8 @@ void create_screen_page_process() {
     objects.page_process = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 800, 480);
+    lv_obj_add_event_cb(
+        obj, event_handler_cb_page_process_page_process, LV_EVENT_ALL, 0);
     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
     {
         lv_obj_t* parent_obj = obj;

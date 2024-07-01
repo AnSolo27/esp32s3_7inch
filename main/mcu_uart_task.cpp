@@ -99,9 +99,10 @@ void uart_init(void) {
 
 #define ASP_CMD_GET_FW_VER 0x0
 
-#define DISP_CMD_BTN_H    0xA0
-#define DISP_CMD_NOTIFY_P 0xA1
-#define DISP_CMD_NOTIFY_T 0xA2
+#define DISP_CMD_BTN_H            0xA0
+#define DISP_CMD_NOTIFY_P         0xA1
+#define DISP_CMD_NOTIFY_T         0xA2
+#define DISP_CMD_PROCESS_SETTINGS 0xA3
 
 #define DISP_CMD_CHANGE_SCREEN 0xB0
 
@@ -130,6 +131,28 @@ void mcu_uart_answer_fw_ver(void) {
 void mcu_uart_btn_pressed(uint8_t screen, uint8_t btn) {
     uint8_t tx_buf[] = {
         HEADER_ANSWER, 0x00, 0x00, DISP_CMD_BTN_H, screen, btn, 0x00, 0x00};
+    tx_buf[1] = (uint8_t)(sizeof(tx_buf) >> 8);
+    tx_buf[2] = (uint8_t)(sizeof(tx_buf));
+    //get_crc_and_write(tx_buf, sizeof(tx_buf) - 2, &tx_buf[sizeof(tx_buf) - 2]);
+    uart_write_bytes(UART_NUM_1, tx_buf, sizeof(tx_buf));
+}
+
+void mcu_uart_process_settings(
+    uint8_t type,
+    uint8_t top_t,
+    uint8_t bot_t,
+    uint8_t time) {
+    uint8_t tx_buf[] = {
+        HEADER_ANSWER,
+        0x00,
+        0x00,
+        DISP_CMD_PROCESS_SETTINGS,
+        type,
+        top_t,
+        bot_t,
+        time,
+        0x00,
+        0x00};
     tx_buf[1] = (uint8_t)(sizeof(tx_buf) >> 8);
     tx_buf[2] = (uint8_t)(sizeof(tx_buf));
     //get_crc_and_write(tx_buf, sizeof(tx_buf) - 2, &tx_buf[sizeof(tx_buf) - 2]);

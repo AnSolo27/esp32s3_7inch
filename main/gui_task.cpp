@@ -133,6 +133,10 @@ void action_event_btn_process_scr(lv_event_t* e) {
     if(obj == objects.btn_process_stop) {
         //loadScreen(SCREEN_ID_MAIN);
         mcu_uart_btn_pressed(0, BTN_PROCESS_FINISH);
+    } else if(obj == objects.page_process) {
+        ESP_LOGI(TAG, "Process loaded");
+        mcu_uart_process_settings(
+            0, T_Top_target.get_val(), T_Bot_target.get_val(), 100);
     }
 }
 
@@ -164,6 +168,8 @@ void action_event_btn_main_scr(lv_event_t* e) {
     } else if(obj == objects.btn_t_bot_dec) {
         ESP_LOGI(TAG, "btn_t_bot_dec");
         T_Bot_target.set(T_Bot_target.get_val() - 1);
+    } else if(obj == objects.main) {
+        ESP_LOGI(TAG, "Main loaded");
     }
 }
 
