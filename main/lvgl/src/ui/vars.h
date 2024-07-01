@@ -21,7 +21,8 @@ enum FlowGlobalVariables {
     FLOW_GLOBAL_VARIABLE_P_TOP_L = 3,
     FLOW_GLOBAL_VARIABLE_P_BOT_L = 4,
     FLOW_GLOBAL_VARIABLE_P_TOP_METER = 5,
-    FLOW_GLOBAL_VARIABLE_P_BOT_METER = 6
+    FLOW_GLOBAL_VARIABLE_P_BOT_METER = 6,
+    FLOW_GLOBAL_VARIABLE_TIME_TO_FINISH = 7
 };
 
 // Native global variables
@@ -40,6 +41,8 @@ extern float get_var_p_top_meter();
 extern void set_var_p_top_meter(float value);
 extern float get_var_p_bot_meter();
 extern void set_var_p_bot_meter(float value);
+extern const char *get_var_time_to_finish();
+extern void set_var_time_to_finish(const char *value);
 
 
 #ifdef __cplusplus

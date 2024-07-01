@@ -20,6 +20,13 @@
 #include "driver/gpio.h"
 #include "driver/uart.h"
 
+#include "gui_task.h"
+
+#include "lvgl.h"
+#include "lvgl/src/ui/ui.h"
+#include "lvgl/src/ui/vars.h"
+#include "lvgl/src/ui/actions.h"
+
 #include <string>
 using namespace std;
 /**********Extern**********/
@@ -92,10 +99,16 @@ void uart_init(void) {
 
 #define ASP_CMD_GET_FW_VER 0x0
 
-#define DISP_CMD_BTN_H      0xA0
-#define ASP_CMD_WRITE_PARAM 0xA1
+#define DISP_CMD_BTN_H    0xA0
+#define DISP_CMD_NOTIFY_P 0xA1
+#define DISP_CMD_NOTIFY_T 0xA2
+
+#define DISP_CMD_CHANGE_SCREEN 0xB0
 
 #define DISPLAY_MIN_MSG_SIZE 6U
+
+uint16_t temp_top;
+uint16_t temp_bot;
 
 void mcu_uart_answer_fw_ver(void) {
     uint8_t tx_buf[] = {
@@ -164,7 +177,7 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
                     break;
                 }
             } else {
-                ESP_LOGI(TAG, "HEADER_ANSWER\r\n");
+                //ESP_LOGI(TAG, "HEADER_ANSWER\r\n");
                 switch(cmd) {
                 case ASP_CMD_POLL:
                     //display_send_status(cmd, 1);
@@ -182,6 +195,29 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
                 case ASP_CMD_GET_SN:
                     //ASP_send_sn();
                     break;
+
+                case DISP_CMD_NOTIFY_P:
+                    p_top_set(data[4]);
+                    p_bot_set(data[5]);
+                    break;
+
+                case DISP_CMD_NOTIFY_T:
+                    temp_top = (data[6] << 8) | data[7];
+                    temp_bot = (data[8] << 8) | data[9];
+                    ESP_LOGI(TAG, "T Top %u %u", data[4], temp_top);
+                    ESP_LOGI(TAG, "T Bot %u %u", data[5], temp_bot);
+                    //p_top_set(data[4]);
+                    //p_bot_set(data[5]);
+                    break;
+
+                case DISP_CMD_CHANGE_SCREEN:
+                    //TODO to queue
+                    if(data[4] == 0) {
+                        loadScreen(SCREEN_ID_MAIN);
+                    } else if(data[4] == 1) {
+                        loadScreen(SCREEN_ID_PAGE_PROCESS);
+                    }
+                    break;
                 }
             }
         }
@@ -193,22 +229,19 @@ void mcu_uart_task(void* pvParameters) {
     uint8_t dtmp[RX_BUF_SIZE];
     ESP_LOGI(TAG, "created");
     uart_init();
-    int cnt = 0;
     for(;;) {
         //Waiting for UART event.
         if(xQueueReceive(
                uart0_queue, (void*)&event, (TickType_t)portMAX_DELAY)) {
             bzero(dtmp, RX_BUF_SIZE);
-            ESP_LOGI(TAG, "uart[%d] event:", UART_NUM_1);
-            cnt++;
-            ESP_LOGI(TAG, "cnt %d:", cnt);
+            //ESP_LOGI(TAG, "uart[%d] event:", UART_NUM_1);
             switch(event.type) {
                 //Event of UART receving data
                 /*We'd better handler data event fast, there would be much more data events than
             other types of events. If we take too much time on data event, the queue might
             be full.*/
             case UART_DATA:
-                ESP_LOGI(TAG, "[UART DATA]: %d", event.size);
+                //ESP_LOGI(TAG, "[UART DATA]: %d", event.size);
                 uart_read_bytes(UART_NUM_1, dtmp, event.size, portMAX_DELAY);
                 mcu_uart_handle_msg(dtmp, event.size);
                 break;
