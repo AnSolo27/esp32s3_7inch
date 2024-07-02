@@ -546,8 +546,10 @@ void create_screen_page_process() {
             }
         }
         {
+            // process_chart
             lv_obj_t* obj = lv_chart_create(parent_obj);
-            lv_obj_set_pos(obj, 24, 73);
+            objects.process_chart = obj;
+            lv_obj_set_pos(obj, 52, 82);
             lv_obj_set_size(obj, 317, 269);
         }
         {

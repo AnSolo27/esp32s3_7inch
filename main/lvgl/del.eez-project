@@ -1582,8 +1582,8 @@
             {
               "objID": "ca523cdb-28c8-4b74-a5e2-44460f71247a",
               "type": "LVGLChartWidget",
-              "left": 24,
-              "top": 73,
+              "left": 52,
+              "top": 82,
               "width": 317,
               "height": 269,
               "customInputs": [],
@@ -1596,6 +1596,7 @@
               },
               "timeline": [],
               "eventHandlers": [],
+              "identifier": "process_chart",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "px",

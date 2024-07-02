@@ -230,6 +230,9 @@ void gui_task(void* pvParameters) {
     P_Top.set(0);
     P_Bot.set(0);
 
+    lv_chart_set_axis_tick(
+        objects.process_chart, LV_CHART_AXIS_PRIMARY_Y, 10, 5, 6, 5, true, 40);
+
     for(;;) {
         tick_screen(0);
         vTaskDelay(pdMS_TO_TICKS(500));

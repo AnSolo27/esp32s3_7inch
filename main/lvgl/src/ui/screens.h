@@ -29,6 +29,7 @@ typedef struct _objects_t {
     lv_obj_t *obj4;
     lv_obj_t *obj5;
     lv_obj_t *obj6;
+    lv_obj_t *process_chart;
     lv_obj_t *vulc_meter;
 } objects_t;
 
