@@ -910,8 +910,8 @@
             {
               "objID": "d9ff0c5e-5fce-42b2-f706-866f193f874b",
               "type": "LVGLButtonWidget",
-              "left": 350,
-              "top": 368,
+              "left": 339,
+              "top": 416,
               "width": 100,
               "height": 50,
               "customInputs": [],
@@ -953,8 +953,8 @@
             {
               "objID": "c55f80aa-b357-4cba-9cce-0126210cd76f",
               "type": "LVGLLabelWidget",
-              "left": 376,
-              "top": 383,
+              "left": 365,
+              "top": 431,
               "width": 49,
               "height": 21,
               "customInputs": [],
@@ -1261,8 +1261,8 @@
             {
               "objID": "8c4e0360-4fde-4478-d4ec-acde63f63699",
               "type": "LVGLArcWidget",
-              "left": 287,
-              "top": 85,
+              "left": 299,
+              "top": 76,
               "width": 203,
               "height": 192,
               "customInputs": [],
@@ -1300,6 +1300,94 @@
               "bgEndAngle": 60,
               "mode": "NORMAL",
               "rotation": 0
+            },
+            {
+              "objID": "b7c7953f-27ae-490a-c968-e863fd9e8b92",
+              "type": "LVGLCheckboxWidget",
+              "left": 288,
+              "top": 279,
+              "width": 193,
+              "height": 39,
+              "customInputs": [],
+              "customOutputs": [],
+              "style": {
+                "objID": "f14bb07a-da64-4eb4-924a-b10d2d3be024",
+                "useStyle": "default",
+                "conditionalStyles": [],
+                "childStyles": []
+              },
+              "timeline": [],
+              "eventHandlers": [],
+              "identifier": "check_b_sensor_top",
+              "leftUnit": "px",
+              "topUnit": "px",
+              "widthUnit": "content",
+              "heightUnit": "content",
+              "children": [],
+              "flags": "PRESS_LOCK|CLICK_FOCUSABLE|GESTURE_BUBBLE|SNAPPABLE|SCROLL_ON_FOCUS",
+              "hiddenFlagType": "literal",
+              "clickableFlag": false,
+              "clickableFlagType": "literal",
+              "scrollbarMode": "auto",
+              "scrollDirection": "all",
+              "checkedStateType": "literal",
+              "disabledStateType": "literal",
+              "states": "",
+              "localStyles": {
+                "objID": "f1f5d523-585c-4bc6-be39-66c40549414b",
+                "definition": {
+                  "MAIN": {
+                    "DEFAULT": {
+                      "text_font": "gost_32"
+                    }
+                  }
+                }
+              },
+              "text": "Датчик верх"
+            },
+            {
+              "objID": "b4e246e7-5af3-4c1c-ccec-e3f0f576b57a",
+              "type": "LVGLCheckboxWidget",
+              "left": 288,
+              "top": 338,
+              "width": 179,
+              "height": 39,
+              "customInputs": [],
+              "customOutputs": [],
+              "style": {
+                "objID": "48e28e6a-e917-4fcc-c8b6-641e2a395284",
+                "useStyle": "default",
+                "conditionalStyles": [],
+                "childStyles": []
+              },
+              "timeline": [],
+              "eventHandlers": [],
+              "identifier": "check_b_sensor_bot",
+              "leftUnit": "px",
+              "topUnit": "px",
+              "widthUnit": "content",
+              "heightUnit": "content",
+              "children": [],
+              "flags": "PRESS_LOCK|CLICK_FOCUSABLE|GESTURE_BUBBLE|SNAPPABLE|SCROLL_ON_FOCUS",
+              "hiddenFlagType": "literal",
+              "clickableFlag": false,
+              "clickableFlagType": "literal",
+              "scrollbarMode": "auto",
+              "scrollDirection": "all",
+              "checkedStateType": "literal",
+              "disabledStateType": "literal",
+              "states": "",
+              "localStyles": {
+                "objID": "8f09d864-1805-4411-c2ad-4ddb57e2c7b8",
+                "definition": {
+                  "MAIN": {
+                    "DEFAULT": {
+                      "text_font": "gost_32"
+                    }
+                  }
+                }
+              },
+              "text": "Датчик низ"
             }
           ],
           "flags": "PRESS_LOCK|CLICK_FOCUSABLE|GESTURE_BUBBLE|SNAPPABLE|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_CHAIN",

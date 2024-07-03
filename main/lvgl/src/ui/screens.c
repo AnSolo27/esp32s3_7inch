@@ -298,7 +298,7 @@ void create_screen_main() {
             // btn_main_run
             lv_obj_t* obj = lv_btn_create(parent_obj);
             objects.btn_main_run = obj;
-            lv_obj_set_pos(obj, 350, 368);
+            lv_obj_set_pos(obj, 339, 416);
             lv_obj_set_size(obj, 100, 50);
             lv_obj_add_event_cb(
                 obj, event_handler_cb_main_btn_main_run, LV_EVENT_ALL, 0);
@@ -308,7 +308,7 @@ void create_screen_main() {
         {
             lv_obj_t* obj = lv_label_create(parent_obj);
             objects.obj4 = obj;
-            lv_obj_set_pos(obj, 376, 383);
+            lv_obj_set_pos(obj, 365, 431);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Запуск");
             lv_obj_add_event_cb(
@@ -388,10 +388,32 @@ void create_screen_main() {
         }
         {
             lv_obj_t* obj = lv_arc_create(parent_obj);
-            lv_obj_set_pos(obj, 287, 85);
+            lv_obj_set_pos(obj, 299, 76);
             lv_obj_set_size(obj, 203, 192);
             lv_arc_set_value(obj, 25);
             lv_arc_set_bg_end_angle(obj, 60);
+        }
+        {
+            // check_b_sensor_top
+            lv_obj_t* obj = lv_checkbox_create(parent_obj);
+            objects.check_b_sensor_top = obj;
+            lv_obj_set_pos(obj, 288, 279);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_checkbox_set_text(obj, "Датчик верх");
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            // check_b_sensor_bot
+            lv_obj_t* obj = lv_checkbox_create(parent_obj);
+            objects.check_b_sensor_bot = obj;
+            lv_obj_set_pos(obj, 288, 338);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_checkbox_set_text(obj, "Датчик низ");
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
     }
 }

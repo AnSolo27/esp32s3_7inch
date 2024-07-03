@@ -221,6 +221,9 @@ void p_bot_set(uint8_t val) {
     P_Bot.set(val);
 }
 
+extern uint16_t temp_top;
+extern uint16_t temp_bot;
+
 void gui_task(void* pvParameters) {
     ESP_LOGI(TAG, "created");
 
@@ -230,13 +233,37 @@ void gui_task(void* pvParameters) {
     P_Top.set(0);
     P_Bot.set(0);
 
+    lv_chart_set_range(objects.process_chart, LV_CHART_AXIS_PRIMARY_Y, 0, 160);
+
     lv_chart_set_axis_tick(
-        objects.process_chart, LV_CHART_AXIS_PRIMARY_Y, 10, 5, 6, 5, true, 40);
+        objects.process_chart, LV_CHART_AXIS_PRIMARY_Y, 10, 5, 5, 5, true, 40);
+
+    static lv_chart_series_t* ser_top;
+    ser_top = lv_chart_add_series(
+        objects.process_chart,
+        lv_palette_main(LV_PALETTE_RED),
+        LV_CHART_AXIS_PRIMARY_Y);
+
+    static lv_chart_series_t* ser_bot;
+    ser_bot = lv_chart_add_series(
+        objects.process_chart,
+        lv_palette_main(LV_PALETTE_YELLOW),
+        LV_CHART_AXIS_PRIMARY_Y);
+
+    int cnt = 0;
 
     for(;;) {
         tick_screen(0);
         vTaskDelay(pdMS_TO_TICKS(500));
         tick_screen(1);
         vTaskDelay(pdMS_TO_TICKS(500));
+        if(cnt > 5) {
+            cnt = 0;
+            lv_chart_set_next_value(
+                objects.process_chart, ser_top, temp_top / 10);
+            lv_chart_set_next_value(
+                objects.process_chart, ser_bot, temp_bot / 10);
+        }
+        cnt++;
     }
 }

@@ -20,6 +20,8 @@ typedef struct _objects_t {
     lv_obj_t *btn_t_bot_inc;
     lv_obj_t *btn_t_top_dec;
     lv_obj_t *btn_t_top_inc;
+    lv_obj_t *check_b_sensor_bot;
+    lv_obj_t *check_b_sensor_top;
     lv_obj_t *meter_p_bot;
     lv_obj_t *meter_p_top;
     lv_obj_t *obj0;

@@ -229,6 +229,20 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
                     temp_bot = (data[8] << 8) | data[9];
                     ESP_LOGI(TAG, "T Top %u %u", data[4], temp_top);
                     ESP_LOGI(TAG, "T Bot %u %u", data[5], temp_bot);
+                    if(data[4] == 0) {
+                        lv_obj_add_state(
+                            objects.check_b_sensor_top, LV_STATE_CHECKED);
+                    } else {
+                        lv_obj_clear_state(
+                            objects.check_b_sensor_top, LV_STATE_CHECKED);
+                    }
+                    if(data[5] == 0) {
+                        lv_obj_add_state(
+                            objects.check_b_sensor_bot, LV_STATE_CHECKED);
+                    } else {
+                        lv_obj_clear_state(
+                            objects.check_b_sensor_bot, LV_STATE_CHECKED);
+                    }
                     //p_top_set(data[4]);
                     //p_bot_set(data[5]);
                     break;
