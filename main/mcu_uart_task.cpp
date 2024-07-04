@@ -99,17 +99,20 @@ void uart_init(void) {
 
 #define ASP_CMD_GET_FW_VER 0x0
 
-#define DISP_CMD_BTN_H            0xA0
-#define DISP_CMD_NOTIFY_P         0xA1
-#define DISP_CMD_NOTIFY_T         0xA2
-#define DISP_CMD_PROCESS_SETTINGS 0xA3
-
+#define DISP_CMD_BTN_H                 0xA0
+#define DISP_CMD_NOTIFY_P              0xA1
+#define DISP_CMD_NOTIFY_T              0xA2
+#define DISP_CMD_PROCESS_SETTINGS      0xA3
+#define DISP_CMD_NOTIFY_TIME_TO_FINISH 0xA4
+/**/
 #define DISP_CMD_CHANGE_SCREEN 0xB0
 
 #define DISPLAY_MIN_MSG_SIZE 6U
 
 uint16_t temp_top;
 uint16_t temp_bot;
+
+uint16_t time_to_finish;
 
 void mcu_uart_answer_fw_ver(void) {
     uint8_t tx_buf[] = {
@@ -254,6 +257,12 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
                     } else if(data[4] == 1) {
                         loadScreen(SCREEN_ID_PAGE_PROCESS);
                     }
+                    break;
+
+                case DISP_CMD_NOTIFY_TIME_TO_FINISH:
+                    time_to_finish = (data[4] << 8) | data[5];
+                    lv_label_set_text_fmt(
+                        objects.l_time_to_finish, "%u мин", time_to_finish);
                     break;
                 }
             }

@@ -1261,7 +1261,7 @@
             {
               "objID": "8c4e0360-4fde-4478-d4ec-acde63f63699",
               "type": "LVGLArcWidget",
-              "left": 299,
+              "left": 297,
               "top": 76,
               "width": 203,
               "height": 192,
@@ -1274,7 +1274,15 @@
                 "childStyles": []
               },
               "timeline": [],
-              "eventHandlers": [],
+              "eventHandlers": [
+                {
+                  "objID": "95c258bc-9957-4315-b005-d97e64f297f2",
+                  "eventName": "VALUE_CHANGED",
+                  "handlerType": "action",
+                  "action": "event_btn_main_scr"
+                }
+              ],
+              "identifier": "main_time_arc",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "px",
@@ -1388,6 +1396,53 @@
                 }
               },
               "text": "Датчик низ"
+            },
+            {
+              "objID": "68fd91cd-0805-4000-aae6-e86a2ad6de30",
+              "type": "LVGLLabelWidget",
+              "left": 334,
+              "top": 146,
+              "width": 129,
+              "height": 52,
+              "customInputs": [],
+              "customOutputs": [],
+              "style": {
+                "objID": "2a761803-fb10-4ca3-fae1-dab675bcf1ac",
+                "useStyle": "default",
+                "conditionalStyles": [],
+                "childStyles": []
+              },
+              "timeline": [],
+              "eventHandlers": [],
+              "identifier": "l_main_time",
+              "leftUnit": "px",
+              "topUnit": "px",
+              "widthUnit": "content",
+              "heightUnit": "content",
+              "children": [],
+              "flags": "PRESS_LOCK|CLICK_FOCUSABLE|GESTURE_BUBBLE|SNAPPABLE|SCROLLABLE|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_CHAIN",
+              "hiddenFlagType": "literal",
+              "clickableFlagType": "literal",
+              "scrollbarMode": "auto",
+              "scrollDirection": "all",
+              "checkedStateType": "literal",
+              "disabledStateType": "literal",
+              "states": "",
+              "localStyles": {
+                "objID": "ddab589f-9214-4620-e0f1-87703cd838fb",
+                "definition": {
+                  "MAIN": {
+                    "DEFAULT": {
+                      "text_font": "gost_48"
+                    }
+                  }
+                }
+              },
+              "text": "100 мин",
+              "textType": "literal",
+              "longMode": "WRAP",
+              "recolor": false,
+              "previewValue": "100.0"
             }
           ],
           "flags": "PRESS_LOCK|CLICK_FOCUSABLE|GESTURE_BUBBLE|SNAPPABLE|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_CHAIN",
@@ -1708,7 +1763,7 @@
               "type": "LVGLLabelWidget",
               "left": 599,
               "top": 297,
-              "width": 75,
+              "width": 86,
               "height": 35,
               "customInputs": [],
               "customOutputs": [],
@@ -1720,6 +1775,7 @@
               },
               "timeline": [],
               "eventHandlers": [],
+              "identifier": "l_time_to_finish",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "content",
@@ -1743,8 +1799,8 @@
                   }
                 }
               },
-              "text": "time_to_finish",
-              "textType": "expression",
+              "text": "100 мин",
+              "textType": "literal",
               "longMode": "WRAP",
               "recolor": false,
               "previewValue": "time to"

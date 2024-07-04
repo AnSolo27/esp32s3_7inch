@@ -100,6 +100,13 @@ static void event_handler_cb_main_meter_p_top(lv_event_t* e) {
     }
 }
 
+static void event_handler_cb_main_main_time_arc(lv_event_t* e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    if(event == LV_EVENT_VALUE_CHANGED) {
+        action_event_btn_main_scr(e);
+    }
+}
+
 static void event_handler_cb_page_process_page_process(lv_event_t* e) {
     lv_event_code_t event = lv_event_get_code(e);
     if(event == LV_EVENT_SCREEN_LOADED) {
@@ -387,11 +394,15 @@ void create_screen_main() {
                 obj, event_handler_cb_main_meter_p_top, LV_EVENT_ALL, 0);
         }
         {
+            // main_time_arc
             lv_obj_t* obj = lv_arc_create(parent_obj);
-            lv_obj_set_pos(obj, 299, 76);
+            objects.main_time_arc = obj;
+            lv_obj_set_pos(obj, 297, 76);
             lv_obj_set_size(obj, 203, 192);
             lv_arc_set_value(obj, 25);
             lv_arc_set_bg_end_angle(obj, 60);
+            lv_obj_add_event_cb(
+                obj, event_handler_cb_main_main_time_arc, LV_EVENT_ALL, 0);
         }
         {
             // check_b_sensor_top
@@ -414,6 +425,16 @@ void create_screen_main() {
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            // l_main_time
+            lv_obj_t* obj = lv_label_create(parent_obj);
+            objects.l_main_time = obj;
+            lv_obj_set_pos(obj, 334, 146);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "100 мин");
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_48, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
     }
 }
@@ -575,11 +596,12 @@ void create_screen_page_process() {
             lv_obj_set_size(obj, 317, 269);
         }
         {
+            // l_time_to_finish
             lv_obj_t* obj = lv_label_create(parent_obj);
-            objects.obj6 = obj;
+            objects.l_time_to_finish = obj;
             lv_obj_set_pos(obj, 599, 297);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "");
+            lv_label_set_text(obj, "100 мин");
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
@@ -605,15 +627,6 @@ void tick_screen_page_process() {
                     objects.vulc_meter, indicator, new_val);
                 tick_value_change_obj = NULL;
             }
-        }
-    }
-    {
-        const char* new_val = get_var_time_to_finish();
-        const char* cur_val = lv_label_get_text(objects.obj6);
-        if(strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj6;
-            lv_label_set_text(objects.obj6, new_val);
-            tick_value_change_obj = NULL;
         }
     }
 }

@@ -22,6 +22,9 @@ typedef struct _objects_t {
     lv_obj_t *btn_t_top_inc;
     lv_obj_t *check_b_sensor_bot;
     lv_obj_t *check_b_sensor_top;
+    lv_obj_t *l_main_time;
+    lv_obj_t *l_time_to_finish;
+    lv_obj_t *main_time_arc;
     lv_obj_t *meter_p_bot;
     lv_obj_t *meter_p_top;
     lv_obj_t *obj0;
@@ -30,7 +33,6 @@ typedef struct _objects_t {
     lv_obj_t *obj3;
     lv_obj_t *obj4;
     lv_obj_t *obj5;
-    lv_obj_t *obj6;
     lv_obj_t *process_chart;
     lv_obj_t *vulc_meter;
 } objects_t;

@@ -136,7 +136,15 @@ void action_event_btn_process_scr(lv_event_t* e) {
     } else if(obj == objects.page_process) {
         ESP_LOGI(TAG, "Process loaded");
         mcu_uart_process_settings(
-            0, T_Top_target.get_val(), T_Bot_target.get_val(), 100);
+            0,
+            T_Top_target.get_val(),
+            T_Bot_target.get_val(),
+            lv_arc_get_value(objects.main_time_arc) * 2);
+
+        lv_label_set_text_fmt(
+            objects.l_time_to_finish,
+            "%u мин",
+            lv_arc_get_value(objects.main_time_arc) * 2);
     }
 }
 
@@ -170,6 +178,11 @@ void action_event_btn_main_scr(lv_event_t* e) {
         T_Bot_target.set(T_Bot_target.get_val() - 1);
     } else if(obj == objects.main) {
         ESP_LOGI(TAG, "Main loaded");
+    } else if(obj == objects.main_time_arc) {
+        lv_label_set_text_fmt(
+            objects.l_main_time,
+            "%d мин",
+            lv_arc_get_value(objects.main_time_arc) * 2);
     }
 }
 
@@ -204,6 +217,8 @@ const char* get_var_p_top_l(void) {
 const char* get_var_p_bot_l(void) {
     return P_Bot.get_text();
 }
+
+extern uint16_t time_to_finish;
 
 const char* get_var_time_to_finish(void) {
     return "01:40:00";
@@ -251,13 +266,18 @@ void gui_task(void* pvParameters) {
         LV_CHART_AXIS_PRIMARY_Y);
 
     int cnt = 0;
+    lv_arc_set_value(objects.main_time_arc, 50);
+    lv_label_set_text_fmt(
+        objects.l_main_time,
+        "%d мин",
+        lv_arc_get_value(objects.main_time_arc) * 2);
 
     for(;;) {
         tick_screen(0);
         vTaskDelay(pdMS_TO_TICKS(500));
         tick_screen(1);
         vTaskDelay(pdMS_TO_TICKS(500));
-        if(cnt > 5) {
+        if(cnt > 3) {
             cnt = 0;
             lv_chart_set_next_value(
                 objects.process_chart, ser_top, temp_top / 10);
