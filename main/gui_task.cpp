@@ -167,15 +167,24 @@ void action_event_btn_main_scr(lv_event_t* e) {
     } else if(obj == objects.btn_t_top_inc) {
         ESP_LOGI(TAG, "btn_t_top_inc");
         T_Top_target.set(T_Top_target.get_val() + 1);
+        lv_label_set_text_fmt(
+            objects.l_temp_out_target, "%ld", T_Top_target.get_val());
     } else if(obj == objects.btn_t_top_dec) {
         ESP_LOGI(TAG, "btn_t_top_dec");
         T_Top_target.set(T_Top_target.get_val() - 1);
+        lv_label_set_text_fmt(
+            objects.l_temp_out_target, "%ld", T_Top_target.get_val());
     } else if(obj == objects.btn_t_bot_inc) {
         ESP_LOGI(TAG, "btn_t_bot_inc");
         T_Bot_target.set(T_Bot_target.get_val() + 1);
+        lv_label_set_text_fmt(
+            objects.l_temp_in_target, "%ld", T_Bot_target.get_val());
     } else if(obj == objects.btn_t_bot_dec) {
         ESP_LOGI(TAG, "btn_t_bot_dec");
         T_Bot_target.set(T_Bot_target.get_val() - 1);
+        lv_label_set_text_fmt(
+            objects.l_temp_in_target, "%ld", T_Bot_target.get_val());
+
     } else if(obj == objects.main) {
         ESP_LOGI(TAG, "Main loaded");
     } else if(obj == objects.main_time_arc) {
@@ -230,10 +239,12 @@ void set_var_temp_second_target(const char* value) {
 
 void p_top_set(uint8_t val) {
     P_Top.set(val);
+    lv_label_set_text_fmt(objects.l_p_out, "%s", P_Top.get_text());
 }
 
 void p_bot_set(uint8_t val) {
     P_Bot.set(val);
+    lv_label_set_text_fmt(objects.l_p_in, "%s", P_Bot.get_text());
 }
 
 extern uint16_t temp_top;

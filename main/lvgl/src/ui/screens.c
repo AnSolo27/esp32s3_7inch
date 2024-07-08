@@ -79,7 +79,7 @@ static void event_handler_cb_main_btn_main_run(lv_event_t* e) {
     }
 }
 
-static void event_handler_cb_main_obj4(lv_event_t* e) {
+static void event_handler_cb_main_obj0(lv_event_t* e) {
     lv_event_code_t event = lv_event_get_code(e);
     if(event == LV_EVENT_PRESSED) {
         action_event_btn_main_scr(e);
@@ -121,7 +121,7 @@ static void event_handler_cb_page_process_btn_process_stop(lv_event_t* e) {
     }
 }
 
-static void event_handler_cb_page_process_obj5(lv_event_t* e) {
+static void event_handler_cb_page_process_obj1(lv_event_t* e) {
     lv_event_code_t event = lv_event_get_code(e);
     if(event == LV_EVENT_PRESSED) {
         action_event_btn_process_scr(e);
@@ -138,20 +138,22 @@ void create_screen_main() {
     {
         lv_obj_t* parent_obj = obj;
         {
+            // l_p_out
             lv_obj_t* obj = lv_label_create(parent_obj);
-            objects.obj0 = obj;
+            objects.l_p_out = obj;
             lv_obj_set_pos(obj, 105, 277);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "");
+            lv_label_set_text(obj, "0.0");
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
         {
+            // l_p_in
             lv_obj_t* obj = lv_label_create(parent_obj);
-            objects.obj1 = obj;
+            objects.l_p_in = obj;
             lv_obj_set_pos(obj, 643, 256);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "");
+            lv_label_set_text(obj, "0.0");
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
@@ -224,20 +226,22 @@ void create_screen_main() {
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
         }
         {
+            // l_temp_out_target
             lv_obj_t* obj = lv_label_create(parent_obj);
-            objects.obj2 = obj;
+            objects.l_temp_out_target = obj;
             lv_obj_set_pos(obj, 93, 431);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "");
+            lv_label_set_text(obj, "100");
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
         {
+            // l_temp_in_target
             lv_obj_t* obj = lv_label_create(parent_obj);
-            objects.obj3 = obj;
+            objects.l_temp_in_target = obj;
             lv_obj_set_pos(obj, 644, 431);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "");
+            lv_label_set_text(obj, "100");
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
@@ -314,12 +318,12 @@ void create_screen_main() {
         }
         {
             lv_obj_t* obj = lv_label_create(parent_obj);
-            objects.obj4 = obj;
+            objects.obj0 = obj;
             lv_obj_set_pos(obj, 365, 431);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Запуск");
             lv_obj_add_event_cb(
-                obj, event_handler_cb_main_obj4, LV_EVENT_ALL, 0);
+                obj, event_handler_cb_main_obj0, LV_EVENT_ALL, 0);
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_20, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
@@ -354,7 +358,7 @@ void create_screen_main() {
             lv_obj_t* obj = lv_label_create(parent_obj);
             lv_obj_set_pos(obj, 630, 1);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "Низ");
+            lv_label_set_text(obj, "IN");
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_48, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
@@ -362,7 +366,7 @@ void create_screen_main() {
             lv_obj_t* obj = lv_label_create(parent_obj);
             lv_obj_set_pos(obj, 76, 15);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "Верх");
+            lv_label_set_text(obj, "OUT");
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_48, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
@@ -410,7 +414,7 @@ void create_screen_main() {
             objects.check_b_sensor_top = obj;
             lv_obj_set_pos(obj, 288, 279);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_checkbox_set_text(obj, "Датчик верх");
+            lv_checkbox_set_text(obj, "Датчик OUT");
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -421,7 +425,7 @@ void create_screen_main() {
             objects.check_b_sensor_bot = obj;
             lv_obj_set_pos(obj, 288, 338);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_checkbox_set_text(obj, "Датчик низ");
+            lv_checkbox_set_text(obj, "Датчик IN");
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -440,42 +444,6 @@ void create_screen_main() {
 }
 
 void tick_screen_main() {
-    {
-        const char* new_val = get_var_p_top_l();
-        const char* cur_val = lv_label_get_text(objects.obj0);
-        if(strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj0;
-            lv_label_set_text(objects.obj0, new_val);
-            tick_value_change_obj = NULL;
-        }
-    }
-    {
-        const char* new_val = get_var_p_bot_l();
-        const char* cur_val = lv_label_get_text(objects.obj1);
-        if(strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj1;
-            lv_label_set_text(objects.obj1, new_val);
-            tick_value_change_obj = NULL;
-        }
-    }
-    {
-        const char* new_val = get_var_temp_top_target();
-        const char* cur_val = lv_label_get_text(objects.obj2);
-        if(strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj2;
-            lv_label_set_text(objects.obj2, new_val);
-            tick_value_change_obj = NULL;
-        }
-    }
-    {
-        const char* new_val = get_var_temp_bot_target();
-        const char* cur_val = lv_label_get_text(objects.obj3);
-        if(strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj3;
-            lv_label_set_text(objects.obj3, new_val);
-            tick_value_change_obj = NULL;
-        }
-    }
     {
         lv_meter_indicator_t* indicator;
 
@@ -554,12 +522,12 @@ void create_screen_page_process() {
         }
         {
             lv_obj_t* obj = lv_label_create(parent_obj);
-            objects.obj5 = obj;
+            objects.obj1 = obj;
             lv_obj_set_pos(obj, 383, 429);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Стоп");
             lv_obj_add_event_cb(
-                obj, event_handler_cb_page_process_obj5, LV_EVENT_ALL, 0);
+                obj, event_handler_cb_page_process_obj1, LV_EVENT_ALL, 0);
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_20, LV_PART_MAIN | LV_STATE_DEFAULT);
         }

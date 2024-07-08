@@ -125,38 +125,6 @@
         "native": false
       },
       {
-        "objID": "1e2e2854-2f01-4382-c174-a94978786cff",
-        "name": "temp_top_target",
-        "type": "string",
-        "defaultValue": "\"\"",
-        "persistent": false,
-        "native": false
-      },
-      {
-        "objID": "78a7b7d3-6332-4415-ff8f-82cad26244c1",
-        "name": "temp_bot_target",
-        "type": "string",
-        "defaultValue": "\"\"",
-        "persistent": false,
-        "native": false
-      },
-      {
-        "objID": "82a7c4f3-c1fc-432a-99a3-92b26f243d87",
-        "name": "p_top_l",
-        "type": "string",
-        "defaultValue": "\"\"",
-        "persistent": false,
-        "native": false
-      },
-      {
-        "objID": "0a03b8e9-4645-45fd-d1f5-00004a91f86d",
-        "name": "p_bot_l",
-        "type": "string",
-        "defaultValue": "\"\"",
-        "persistent": false,
-        "native": false
-      },
-      {
         "objID": "664e847e-0ed8-458a-9b26-216b128a2563",
         "name": "p_top_meter",
         "type": "float",
@@ -257,6 +225,7 @@
               },
               "timeline": [],
               "eventHandlers": [],
+              "identifier": "l_p_out",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "content",
@@ -280,8 +249,8 @@
                   }
                 }
               },
-              "text": "p_top_l",
-              "textType": "expression",
+              "text": "0.0",
+              "textType": "literal",
               "longMode": "WRAP",
               "recolor": false,
               "previewValue": "0.0"
@@ -303,6 +272,7 @@
               },
               "timeline": [],
               "eventHandlers": [],
+              "identifier": "l_p_in",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "content",
@@ -326,8 +296,8 @@
                   }
                 }
               },
-              "text": "p_bot_l",
-              "textType": "expression",
+              "text": "0.0",
+              "textType": "literal",
               "longMode": "WRAP",
               "recolor": false,
               "previewValue": "0.0"
@@ -595,7 +565,7 @@
               "type": "LVGLLabelWidget",
               "left": 93,
               "top": 431,
-              "width": 55,
+              "width": 37,
               "height": 35,
               "customInputs": [],
               "customOutputs": [],
@@ -607,6 +577,7 @@
               },
               "timeline": [],
               "eventHandlers": [],
+              "identifier": "l_temp_out_target",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "content",
@@ -630,8 +601,8 @@
                   }
                 }
               },
-              "text": "temp_top_target",
-              "textType": "expression",
+              "text": "100",
+              "textType": "literal",
               "longMode": "WRAP",
               "recolor": false,
               "previewValue": "100.0"
@@ -641,7 +612,7 @@
               "type": "LVGLLabelWidget",
               "left": 644,
               "top": 431,
-              "width": 55,
+              "width": 37,
               "height": 35,
               "customInputs": [],
               "customOutputs": [],
@@ -653,6 +624,7 @@
               },
               "timeline": [],
               "eventHandlers": [],
+              "identifier": "l_temp_in_target",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "content",
@@ -676,8 +648,8 @@
                   }
                 }
               },
-              "text": "temp_bot_target",
-              "textType": "expression",
+              "text": "100",
+              "textType": "literal",
               "longMode": "WRAP",
               "recolor": false,
               "previewValue": "100.0"
@@ -1090,7 +1062,7 @@
               "type": "LVGLLabelWidget",
               "left": 630,
               "top": 1,
-              "width": 58,
+              "width": 28,
               "height": 52,
               "customInputs": [],
               "customOutputs": [],
@@ -1125,7 +1097,7 @@
                   }
                 }
               },
-              "text": "Низ",
+              "text": "IN",
               "textType": "literal",
               "longMode": "WRAP",
               "recolor": false
@@ -1135,7 +1107,7 @@
               "type": "LVGLLabelWidget",
               "left": 76,
               "top": 15,
-              "width": 78,
+              "width": 63,
               "height": 52,
               "customInputs": [],
               "customOutputs": [],
@@ -1147,6 +1119,7 @@
               },
               "timeline": [],
               "eventHandlers": [],
+              "identifier": "",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "content",
@@ -1170,7 +1143,7 @@
                   }
                 }
               },
-              "text": "Верх",
+              "text": "OUT",
               "textType": "literal",
               "longMode": "WRAP",
               "recolor": false
@@ -1314,7 +1287,7 @@
               "type": "LVGLCheckboxWidget",
               "left": 288,
               "top": 279,
-              "width": 193,
+              "width": 183,
               "height": 39,
               "customInputs": [],
               "customOutputs": [],
@@ -1351,14 +1324,14 @@
                   }
                 }
               },
-              "text": "Датчик верх"
+              "text": "Датчик OUT"
             },
             {
               "objID": "b4e246e7-5af3-4c1c-ccec-e3f0f576b57a",
               "type": "LVGLCheckboxWidget",
               "left": 288,
               "top": 338,
-              "width": 179,
+              "width": 160,
               "height": 39,
               "customInputs": [],
               "customOutputs": [],
@@ -1395,7 +1368,7 @@
                   }
                 }
               },
-              "text": "Датчик низ"
+              "text": "Датчик IN"
             },
             {
               "objID": "68fd91cd-0805-4000-aae6-e86a2ad6de30",
