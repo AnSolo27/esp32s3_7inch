@@ -16,10 +16,10 @@ typedef struct _objects_t {
     lv_obj_t *btn_p_out_dec;
     lv_obj_t *btn_p_out_inc;
     lv_obj_t *btn_process_stop;
-    lv_obj_t *btn_t_bot_dec;
-    lv_obj_t *btn_t_bot_inc;
-    lv_obj_t *btn_t_top_dec;
-    lv_obj_t *btn_t_top_inc;
+    lv_obj_t *btn_t_in_dec;
+    lv_obj_t *btn_t_in_inc;
+    lv_obj_t *btn_t_out_dec;
+    lv_obj_t *btn_t_out_inc;
     lv_obj_t *check_b_sensor_bot;
     lv_obj_t *check_b_sensor_top;
     lv_obj_t *l_main_time;

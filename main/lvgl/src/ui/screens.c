@@ -23,34 +23,6 @@ static void event_handler_cb_main_btn_p_out_inc(lv_event_t* e) {
     }
 }
 
-static void event_handler_cb_main_btn_t_top_inc(lv_event_t* e) {
-    lv_event_code_t event = lv_event_get_code(e);
-    if(event == LV_EVENT_PRESSED) {
-        action_event_btn_main_scr(e);
-    }
-}
-
-static void event_handler_cb_main_btn_t_bot_inc(lv_event_t* e) {
-    lv_event_code_t event = lv_event_get_code(e);
-    if(event == LV_EVENT_PRESSED) {
-        action_event_btn_main_scr(e);
-    }
-}
-
-static void event_handler_cb_main_btn_t_top_dec(lv_event_t* e) {
-    lv_event_code_t event = lv_event_get_code(e);
-    if(event == LV_EVENT_PRESSED) {
-        action_event_btn_main_scr(e);
-    }
-}
-
-static void event_handler_cb_main_btn_t_bot_dec(lv_event_t* e) {
-    lv_event_code_t event = lv_event_get_code(e);
-    if(event == LV_EVENT_PRESSED) {
-        action_event_btn_main_scr(e);
-    }
-}
-
 static void event_handler_cb_main_btn_main_run(lv_event_t* e) {
     lv_event_code_t event = lv_event_get_code(e);
     if(event == LV_EVENT_RELEASED) {
@@ -219,56 +191,48 @@ void create_screen_main() {
                 obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
         {
-            // btn_t_top_inc
+            // btn_t_out_inc
             lv_obj_t* obj = lv_imgbtn_create(parent_obj);
-            objects.btn_t_top_inc = obj;
+            objects.btn_t_out_inc = obj;
             lv_obj_set_pos(obj, 154, 426);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 40);
             lv_imgbtn_set_src(
                 obj, LV_IMGBTN_STATE_RELEASED, NULL, &img_plus, NULL);
             lv_imgbtn_set_src(
                 obj, LV_IMGBTN_STATE_PRESSED, NULL, &img_plus_pressed, NULL);
-            lv_obj_add_event_cb(
-                obj, event_handler_cb_main_btn_t_top_inc, LV_EVENT_ALL, 0);
         }
         {
-            // btn_t_bot_inc
+            // btn_t_in_inc
             lv_obj_t* obj = lv_imgbtn_create(parent_obj);
-            objects.btn_t_bot_inc = obj;
+            objects.btn_t_in_inc = obj;
             lv_obj_set_pos(obj, 710, 426);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 40);
             lv_imgbtn_set_src(
                 obj, LV_IMGBTN_STATE_RELEASED, NULL, &img_plus, NULL);
             lv_imgbtn_set_src(
                 obj, LV_IMGBTN_STATE_PRESSED, NULL, &img_plus_pressed, NULL);
-            lv_obj_add_event_cb(
-                obj, event_handler_cb_main_btn_t_bot_inc, LV_EVENT_ALL, 0);
         }
         {
-            // btn_t_top_dec
+            // btn_t_out_dec
             lv_obj_t* obj = lv_imgbtn_create(parent_obj);
-            objects.btn_t_top_dec = obj;
+            objects.btn_t_out_dec = obj;
             lv_obj_set_pos(obj, 44, 426);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 40);
             lv_imgbtn_set_src(
                 obj, LV_IMGBTN_STATE_RELEASED, NULL, &img_minus, NULL);
             lv_imgbtn_set_src(
                 obj, LV_IMGBTN_STATE_PRESSED, NULL, &img_minus_pressed, NULL);
-            lv_obj_add_event_cb(
-                obj, event_handler_cb_main_btn_t_top_dec, LV_EVENT_ALL, 0);
         }
         {
-            // btn_t_bot_dec
+            // btn_t_in_dec
             lv_obj_t* obj = lv_imgbtn_create(parent_obj);
-            objects.btn_t_bot_dec = obj;
+            objects.btn_t_in_dec = obj;
             lv_obj_set_pos(obj, 591, 426);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 40);
             lv_imgbtn_set_src(
                 obj, LV_IMGBTN_STATE_RELEASED, NULL, &img_minus, NULL);
             lv_imgbtn_set_src(
                 obj, LV_IMGBTN_STATE_PRESSED, NULL, &img_minus_pressed, NULL);
-            lv_obj_add_event_cb(
-                obj, event_handler_cb_main_btn_t_bot_dec, LV_EVENT_ALL, 0);
         }
         {
             lv_obj_t* obj = lv_label_create(parent_obj);

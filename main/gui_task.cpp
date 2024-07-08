@@ -99,7 +99,12 @@ class Sensor_T {
 public:
     Sensor_T(){};
     void set(int32_t new_val) {
-        val = new_val;
+        if(new_val > max_val) {
+            val = max_val;
+        } else {
+            val = new_val;
+        }
+
         sprintf(text, "%ld", val);
     }
     const char* get_text(void) {
@@ -110,9 +115,14 @@ public:
         return val;
     }
 
+    void set_max_val(int32_t _max_val) {
+        max_val = _max_val;
+    }
+
 private:
     char text[32];
     int32_t val = 0;
+    int32_t max_val = INT32_MAX;
 };
 
 Sensor_T T_Top_target;
@@ -161,26 +171,6 @@ void action_event_btn_main_scr(lv_event_t* e) {
     }
     if(obj == objects.btn_main_run) {
         mcu_uart_btn_pressed(0, BTN_RUN, is_long_press);
-    } else if(obj == objects.btn_t_top_inc) {
-        ESP_LOGI(TAG, "btn_t_top_inc");
-        T_Top_target.set(T_Top_target.get_val() + 1);
-        lv_label_set_text_fmt(
-            objects.l_temp_out_target, "%ld", T_Top_target.get_val());
-    } else if(obj == objects.btn_t_top_dec) {
-        ESP_LOGI(TAG, "btn_t_top_dec");
-        T_Top_target.set(T_Top_target.get_val() - 1);
-        lv_label_set_text_fmt(
-            objects.l_temp_out_target, "%ld", T_Top_target.get_val());
-    } else if(obj == objects.btn_t_bot_inc) {
-        ESP_LOGI(TAG, "btn_t_bot_inc");
-        T_Bot_target.set(T_Bot_target.get_val() + 1);
-        lv_label_set_text_fmt(
-            objects.l_temp_in_target, "%ld", T_Bot_target.get_val());
-    } else if(obj == objects.btn_t_bot_dec) {
-        ESP_LOGI(TAG, "btn_t_bot_dec");
-        T_Bot_target.set(T_Bot_target.get_val() - 1);
-        lv_label_set_text_fmt(
-            objects.l_temp_in_target, "%ld", T_Bot_target.get_val());
     } else if(obj == objects.main) {
         ESP_LOGI(TAG, "Main loaded");
     } else if(obj == objects.main_time_arc) {
@@ -215,6 +205,42 @@ static void custom_events_cb_main_btns(lv_event_t* e) {
     } else if(obj == objects.btn_p_in_dec) {
         ESP_LOGI(TAG, "btn_p_bot_dec");
         mcu_uart_btn_pressed(0, BTN_P_BOT_DEC, is_long_press);
+    }
+}
+
+static void custom_events_cb_main_t_btns(lv_event_t* e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    lv_obj_t* obj = lv_event_get_target(e);
+    uint8_t is_long_press = 0;
+    if(e->code == LV_EVENT_LONG_PRESSED) {
+        is_long_press = 1;
+    } else if(e->code == LV_EVENT_SHORT_CLICKED) {
+        is_long_press = 0;
+    } else if(e->code == LV_EVENT_LONG_PRESSED_REPEAT) {
+        is_long_press = 0;
+    } else {
+        return;
+    }
+    if(obj == objects.btn_t_out_inc) {
+        ESP_LOGI(TAG, "btn_t_top_inc");
+        T_Top_target.set(T_Top_target.get_val() + 1);
+        lv_label_set_text_fmt(
+            objects.l_temp_out_target, "%ld", T_Top_target.get_val());
+    } else if(obj == objects.btn_t_out_dec) {
+        ESP_LOGI(TAG, "btn_t_top_dec");
+        T_Top_target.set(T_Top_target.get_val() - 1);
+        lv_label_set_text_fmt(
+            objects.l_temp_out_target, "%ld", T_Top_target.get_val());
+    } else if(obj == objects.btn_t_in_inc) {
+        ESP_LOGI(TAG, "btn_t_bot_inc");
+        T_Bot_target.set(T_Bot_target.get_val() + 1);
+        lv_label_set_text_fmt(
+            objects.l_temp_in_target, "%ld", T_Bot_target.get_val());
+    } else if(obj == objects.btn_t_in_dec) {
+        ESP_LOGI(TAG, "btn_t_bot_dec");
+        T_Bot_target.set(T_Bot_target.get_val() - 1);
+        lv_label_set_text_fmt(
+            objects.l_temp_in_target, "%ld", T_Bot_target.get_val());
     }
 }
 
@@ -279,6 +305,9 @@ void gui_task(void* pvParameters) {
     T_Top_target.set(100);
     T_Bot_target.set(100);
 
+    T_Top_target.set_max_val(150);
+    T_Bot_target.set_max_val(150);
+
     P_Top.set(0);
     P_Bot.set(0);
 
@@ -315,6 +344,16 @@ void gui_task(void* pvParameters) {
         objects.btn_p_in_inc, custom_events_cb_main_btns, LV_EVENT_ALL, 0);
     lv_obj_add_event_cb(
         objects.btn_p_in_dec, custom_events_cb_main_btns, LV_EVENT_ALL, 0);
+
+    //
+    lv_obj_add_event_cb(
+        objects.btn_t_out_inc, custom_events_cb_main_t_btns, LV_EVENT_ALL, 0);
+    lv_obj_add_event_cb(
+        objects.btn_t_out_dec, custom_events_cb_main_t_btns, LV_EVENT_ALL, 0);
+    lv_obj_add_event_cb(
+        objects.btn_t_in_inc, custom_events_cb_main_t_btns, LV_EVENT_ALL, 0);
+    lv_obj_add_event_cb(
+        objects.btn_t_in_dec, custom_events_cb_main_t_btns, LV_EVENT_ALL, 0);
 
     for(;;) {
         tick_screen(0);
