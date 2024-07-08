@@ -104,6 +104,7 @@ void uart_init(void) {
 #define DISP_CMD_NOTIFY_T              0xA2
 #define DISP_CMD_PROCESS_SETTINGS      0xA3
 #define DISP_CMD_NOTIFY_TIME_TO_FINISH 0xA4
+#define DISP_CMD_NOTIFY_P_TARGET       0xA5
 /**/
 #define DISP_CMD_CHANGE_SCREEN 0xB0
 
@@ -125,6 +126,14 @@ void mcu_uart_answer_fw_ver(void) {
         PATCH,
         0x00,
         0x00};
+    tx_buf[1] = (uint8_t)(sizeof(tx_buf) >> 8);
+    tx_buf[2] = (uint8_t)(sizeof(tx_buf));
+    //get_crc_and_write(tx_buf, sizeof(tx_buf) - 2, &tx_buf[sizeof(tx_buf) - 2]);
+    uart_write_bytes(UART_NUM_1, tx_buf, sizeof(tx_buf));
+}
+
+void mcu_uart_answer_status(uint8_t cmd, uint8_t status) {
+    uint8_t tx_buf[] = {HEADER_ANSWER, 0x00, 0x00, cmd, status, 0x00, 0x00};
     tx_buf[1] = (uint8_t)(sizeof(tx_buf) >> 8);
     tx_buf[2] = (uint8_t)(sizeof(tx_buf));
     //get_crc_and_write(tx_buf, sizeof(tx_buf) - 2, &tx_buf[sizeof(tx_buf) - 2]);
@@ -208,6 +217,12 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
 
                 case ASP_CMD_GET_SN:
                     //ASP_send_sn();
+                    break;
+
+                case DISP_CMD_NOTIFY_P_TARGET:
+                    p_out_taget_set(data[4]);
+                    p_in_taget_set(data[4]);
+                    mcu_uart_answer_status(cmd, 0);
                     break;
                 }
             } else {

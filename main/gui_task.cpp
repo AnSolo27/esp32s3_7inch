@@ -131,6 +131,9 @@ Sensor_T T_Bot_target;
 Sensor_P P_Top;
 Sensor_P P_Bot;
 
+Sensor_P P_OUT_target;
+Sensor_P P_IN_target;
+
 //LV_EVENT_DRAW_PART_BEGIN
 //event_handler_cb_main_meter_p_bot
 
@@ -289,11 +292,31 @@ void set_var_temp_second_target(const char* value) {
 void p_top_set(uint8_t val) {
     P_Top.set(val);
     lv_label_set_text_fmt(objects.l_p_out, "%s", P_Top.get_text());
+    lv_label_set_text_fmt(
+        objects.p_out_proc, "%s/%s", P_Top.get_text(), P_OUT_target.get_text());
 }
 
 void p_bot_set(uint8_t val) {
     P_Bot.set(val);
     lv_label_set_text_fmt(objects.l_p_in, "%s", P_Bot.get_text());
+    lv_label_set_text_fmt(
+        objects.p_in_proc, "%s/%s", P_Bot.get_text(), P_IN_target.get_text());
+}
+
+void p_out_taget_set(uint8_t val) {
+    //P_Top.set(val);
+    //lv_label_set_text_fmt(objects.l_p_out, "%s", P_Top.get_text());
+    P_OUT_target.set(val);
+    lv_label_set_text_fmt(
+        objects.p_out_proc, "%s/%s", P_Top.get_text(), P_OUT_target.get_text());
+}
+
+void p_in_taget_set(uint8_t val) {
+    //P_Bot.set(val);
+    //lv_label_set_text_fmt(objects.l_p_in, "%s", P_Bot.get_text());
+    P_IN_target.set(val);
+    lv_label_set_text_fmt(
+        objects.p_in_proc, "%s/%s", P_Bot.get_text(), P_IN_target.get_text());
 }
 
 extern uint16_t temp_top;

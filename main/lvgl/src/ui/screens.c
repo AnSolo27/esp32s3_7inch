@@ -469,31 +469,6 @@ void create_screen_page_process() {
                 obj, &ui_font_gost_20, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
         {
-            // vulc_meter
-            lv_obj_t* obj = lv_meter_create(parent_obj);
-            objects.vulc_meter = obj;
-            lv_obj_set_pos(obj, 566, 82);
-            lv_obj_set_size(obj, 180, 180);
-            {
-                lv_meter_scale_t* scale = lv_meter_add_scale(obj);
-                lv_meter_set_scale_ticks(
-                    obj, scale, 41, 1, 5, lv_color_hex(0xffa0a0a0));
-                lv_meter_set_scale_major_ticks(
-                    obj, scale, 5, 3, 10, lv_color_hex(0xff000000), 10);
-                lv_meter_set_scale_range(obj, scale, 0, 160, 300, 90);
-                {
-                    lv_meter_indicator_t* indicator = lv_meter_add_arc(
-                        obj, scale, 2, lv_color_hex(0xff000000), 0);
-                    lv_meter_set_indicator_start_value(obj, indicator, 0);
-                    lv_meter_set_indicator_end_value(obj, indicator, 100);
-                }
-                {
-                    lv_meter_indicator_t* indicator = lv_meter_add_needle_line(
-                        obj, scale, 3, lv_color_hex(0xffff0000), -28);
-                }
-            }
-        }
-        {
             // process_chart
             lv_obj_t* obj = lv_chart_create(parent_obj);
             objects.process_chart = obj;
@@ -504,9 +479,45 @@ void create_screen_page_process() {
             // l_time_to_finish
             lv_obj_t* obj = lv_label_create(parent_obj);
             objects.l_time_to_finish = obj;
-            lv_obj_set_pos(obj, 599, 297);
+            lv_obj_set_pos(obj, 528, 287);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "100 мин");
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            // p_in_proc
+            lv_obj_t* obj = lv_label_create(parent_obj);
+            objects.p_in_proc = obj;
+            lv_obj_set_pos(obj, 551, 111);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "0.0/0.0");
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            lv_obj_t* obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 491, 111);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "IN:");
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            // p_out_proc
+            lv_obj_t* obj = lv_label_create(parent_obj);
+            objects.p_out_proc = obj;
+            lv_obj_set_pos(obj, 551, 158);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "0.0/0.0");
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            lv_obj_t* obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 492, 158);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "OUT:");
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
@@ -514,26 +525,6 @@ void create_screen_page_process() {
 }
 
 void tick_screen_page_process() {
-    {
-        lv_meter_indicator_t* indicator;
-
-        lv_ll_t* indicators = &((lv_meter_t*)objects.vulc_meter)->indicator_ll;
-        int index = 1;
-        for(indicator = _lv_ll_get_tail(indicators);
-            index > 0 && indicator != NULL;
-            indicator = _lv_ll_get_prev(indicators, indicator), index--);
-
-        if(indicator) {
-            int32_t new_val = get_var_meter_cnt();
-            int32_t cur_val = indicator->start_value;
-            if(new_val != cur_val) {
-                tick_value_change_obj = objects.vulc_meter;
-                lv_meter_set_indicator_value(
-                    objects.vulc_meter, indicator, new_val);
-                tick_value_change_obj = NULL;
-            }
-        }
-    }
 }
 
 void create_screens() {

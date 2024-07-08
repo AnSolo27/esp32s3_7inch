@@ -21,6 +21,9 @@ void gui_task_create(uint32_t stack_size, uint32_t prio);
 void p_top_set(uint8_t val);
 void p_bot_set(uint8_t val);
 
+void p_out_taget_set(uint8_t val);
+void p_in_taget_set(uint8_t val);
+
 #ifdef __cplusplus
 }
 #endif

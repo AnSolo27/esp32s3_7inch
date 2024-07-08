@@ -33,8 +33,9 @@ typedef struct _objects_t {
     lv_obj_t *meter_p_top;
     lv_obj_t *obj0;
     lv_obj_t *obj1;
+    lv_obj_t *p_in_proc;
+    lv_obj_t *p_out_proc;
     lv_obj_t *process_chart;
-    lv_obj_t *vulc_meter;
 } objects_t;
 
 extern objects_t objects;
