@@ -130,9 +130,14 @@ void sensor_update_val(sensor_val_t* sens) {
 
 void action_event_btn_process_scr(lv_event_t* e) {
     lv_obj_t* obj = lv_event_get_target(e);
+    uint8_t is_long_press = 0;
+    if(e->code == LV_EVENT_LONG_PRESSED) {
+        is_long_press = 1;
+    }
+
     if(obj == objects.btn_process_stop) {
         //loadScreen(SCREEN_ID_MAIN);
-        mcu_uart_btn_pressed(0, BTN_PROCESS_FINISH);
+        mcu_uart_btn_pressed(0, BTN_PROCESS_FINISH, is_long_press);
     } else if(obj == objects.page_process) {
         ESP_LOGI(TAG, "Process loaded");
         mcu_uart_process_settings(
@@ -150,20 +155,12 @@ void action_event_btn_process_scr(lv_event_t* e) {
 
 void action_event_btn_main_scr(lv_event_t* e) {
     lv_obj_t* obj = lv_event_get_target(e);
+    uint8_t is_long_press = 0;
+    if(e->code == LV_EVENT_LONG_PRESSED) {
+        is_long_press = 1;
+    }
     if(obj == objects.btn_main_run) {
-        mcu_uart_btn_pressed(0, BTN_RUN);
-    } else if(obj == objects.btn_p_top_inc) {
-        ESP_LOGI(TAG, "btn_p_top_inc");
-        mcu_uart_btn_pressed(0, BTN_P_TOP_INC);
-    } else if(obj == objects.btn_p_top_dec) {
-        ESP_LOGI(TAG, "btn_p_top_dec");
-        mcu_uart_btn_pressed(0, BTN_P_TOP_DEC);
-    } else if(obj == objects.btn_p_bot_inc) {
-        ESP_LOGI(TAG, "btn_p_bot_inc");
-        mcu_uart_btn_pressed(0, BTN_P_BOT_INC);
-    } else if(obj == objects.btn_p_bot_dec) {
-        ESP_LOGI(TAG, "btn_p_bot_dec");
-        mcu_uart_btn_pressed(0, BTN_P_BOT_DEC);
+        mcu_uart_btn_pressed(0, BTN_RUN, is_long_press);
     } else if(obj == objects.btn_t_top_inc) {
         ESP_LOGI(TAG, "btn_t_top_inc");
         T_Top_target.set(T_Top_target.get_val() + 1);
@@ -184,7 +181,6 @@ void action_event_btn_main_scr(lv_event_t* e) {
         T_Bot_target.set(T_Bot_target.get_val() - 1);
         lv_label_set_text_fmt(
             objects.l_temp_in_target, "%ld", T_Bot_target.get_val());
-
     } else if(obj == objects.main) {
         ESP_LOGI(TAG, "Main loaded");
     } else if(obj == objects.main_time_arc) {
@@ -192,6 +188,33 @@ void action_event_btn_main_scr(lv_event_t* e) {
             objects.l_main_time,
             "%d мин",
             lv_arc_get_value(objects.main_time_arc) * 2);
+    }
+}
+
+static void custom_events_cb_main_btns(lv_event_t* e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    lv_obj_t* obj = lv_event_get_target(e);
+    uint8_t is_long_press = 0;
+    if(e->code == LV_EVENT_LONG_PRESSED) {
+        is_long_press = 1;
+    } else if(e->code == LV_EVENT_SHORT_CLICKED) {
+        is_long_press = 0;
+    } else {
+        return;
+    }
+    if(obj == objects.btn_p_out_inc) {
+        ESP_LOGI(TAG, "btn_p_top_inc %u", e->code);
+        mcu_uart_btn_pressed(0, BTN_P_TOP_INC, is_long_press);
+
+    } else if(obj == objects.btn_p_out_dec) {
+        ESP_LOGI(TAG, "btn_p_top_dec");
+        mcu_uart_btn_pressed(0, BTN_P_TOP_DEC, is_long_press);
+    } else if(obj == objects.btn_p_in_inc) {
+        ESP_LOGI(TAG, "btn_p_bot_inc");
+        mcu_uart_btn_pressed(0, BTN_P_BOT_INC, is_long_press);
+    } else if(obj == objects.btn_p_in_dec) {
+        ESP_LOGI(TAG, "btn_p_bot_dec");
+        mcu_uart_btn_pressed(0, BTN_P_BOT_DEC, is_long_press);
     }
 }
 
@@ -282,6 +305,16 @@ void gui_task(void* pvParameters) {
         objects.l_main_time,
         "%d мин",
         lv_arc_get_value(objects.main_time_arc) * 2);
+
+    //btns
+    lv_obj_add_event_cb(
+        objects.btn_p_out_inc, custom_events_cb_main_btns, LV_EVENT_ALL, 0);
+    lv_obj_add_event_cb(
+        objects.btn_p_out_dec, custom_events_cb_main_btns, LV_EVENT_ALL, 0);
+    lv_obj_add_event_cb(
+        objects.btn_p_in_inc, custom_events_cb_main_btns, LV_EVENT_ALL, 0);
+    lv_obj_add_event_cb(
+        objects.btn_p_in_dec, custom_events_cb_main_btns, LV_EVENT_ALL, 0);
 
     for(;;) {
         tick_screen(0);

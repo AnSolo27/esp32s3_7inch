@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 void mcu_uart_task_create(uint32_t stack_size, uint32_t prio);
-void mcu_uart_btn_pressed(uint8_t screen, uint8_t btn);
+void mcu_uart_btn_pressed(uint8_t screen, uint8_t btn, uint8_t event_type);
 void mcu_uart_process_settings(
     uint8_t type,
     uint8_t top_t,

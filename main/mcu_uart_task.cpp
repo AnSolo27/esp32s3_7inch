@@ -131,9 +131,17 @@ void mcu_uart_answer_fw_ver(void) {
     uart_write_bytes(UART_NUM_1, tx_buf, sizeof(tx_buf));
 }
 
-void mcu_uart_btn_pressed(uint8_t screen, uint8_t btn) {
+void mcu_uart_btn_pressed(uint8_t screen, uint8_t btn, uint8_t event_type) {
     uint8_t tx_buf[] = {
-        HEADER_ANSWER, 0x00, 0x00, DISP_CMD_BTN_H, screen, btn, 0x00, 0x00};
+        HEADER_ANSWER,
+        0x00,
+        0x00,
+        DISP_CMD_BTN_H,
+        screen,
+        btn,
+        event_type,
+        0x00,
+        0x00};
     tx_buf[1] = (uint8_t)(sizeof(tx_buf) >> 8);
     tx_buf[2] = (uint8_t)(sizeof(tx_buf));
     //get_crc_and_write(tx_buf, sizeof(tx_buf) - 2, &tx_buf[sizeof(tx_buf) - 2]);
@@ -230,8 +238,8 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
                 case DISP_CMD_NOTIFY_T:
                     temp_top = (data[6] << 8) | data[7];
                     temp_bot = (data[8] << 8) | data[9];
-                    ESP_LOGI(TAG, "T Top %u %u", data[4], temp_top);
-                    ESP_LOGI(TAG, "T Bot %u %u", data[5], temp_bot);
+                    //ESP_LOGI(TAG, "T Top %u %u", data[4], temp_top);
+                    //ESP_LOGI(TAG, "T Bot %u %u", data[5], temp_bot);
                     if(data[4] == 0) {
                         lv_obj_add_state(
                             objects.check_b_sensor_top, LV_STATE_CHECKED);

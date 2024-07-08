@@ -11,10 +11,10 @@ typedef struct _objects_t {
     lv_obj_t *main;
     lv_obj_t *page_process;
     lv_obj_t *btn_main_run;
-    lv_obj_t *btn_p_bot_dec;
-    lv_obj_t *btn_p_bot_inc;
-    lv_obj_t *btn_p_top_dec;
-    lv_obj_t *btn_p_top_inc;
+    lv_obj_t *btn_p_in_dec;
+    lv_obj_t *btn_p_in_inc;
+    lv_obj_t *btn_p_out_dec;
+    lv_obj_t *btn_p_out_inc;
     lv_obj_t *btn_process_stop;
     lv_obj_t *btn_t_bot_dec;
     lv_obj_t *btn_t_bot_inc;

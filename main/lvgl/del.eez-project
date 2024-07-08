@@ -326,7 +326,7 @@
                   "action": "event_btn_main_scr"
                 }
               ],
-              "identifier": "btn_p_top_inc",
+              "identifier": "btn_p_out_inc",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "content",
@@ -363,15 +363,8 @@
                 "childStyles": []
               },
               "timeline": [],
-              "eventHandlers": [
-                {
-                  "objID": "23f40ab5-077a-47f4-f0ee-ad32361a210a",
-                  "eventName": "PRESSED",
-                  "handlerType": "action",
-                  "action": "event_btn_main_scr"
-                }
-              ],
-              "identifier": "btn_p_bot_inc",
+              "eventHandlers": [],
+              "identifier": "btn_p_in_inc",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "content",
@@ -408,15 +401,8 @@
                 "childStyles": []
               },
               "timeline": [],
-              "eventHandlers": [
-                {
-                  "objID": "296a7905-7a4f-417b-c00e-6623417f474f",
-                  "eventName": "PRESSED",
-                  "handlerType": "action",
-                  "action": "event_btn_main_scr"
-                }
-              ],
-              "identifier": "btn_p_top_dec",
+              "eventHandlers": [],
+              "identifier": "btn_p_out_dec",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "content",
@@ -453,15 +439,8 @@
                 "childStyles": []
               },
               "timeline": [],
-              "eventHandlers": [
-                {
-                  "objID": "44ba27b3-30d7-4dc7-b5b5-e779c745d700",
-                  "eventName": "PRESSED",
-                  "handlerType": "action",
-                  "action": "event_btn_main_scr"
-                }
-              ],
-              "identifier": "btn_p_bot_dec",
+              "eventHandlers": [],
+              "identifier": "btn_p_in_dec",
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "content",
