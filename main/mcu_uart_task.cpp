@@ -221,7 +221,7 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
 
                 case DISP_CMD_NOTIFY_P_TARGET:
                     p_out_taget_set(data[4]);
-                    p_in_taget_set(data[4]);
+                    p_in_taget_set(data[5]);
                     mcu_uart_answer_status(cmd, 0);
                     break;
                 }
