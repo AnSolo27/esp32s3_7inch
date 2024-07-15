@@ -48,10 +48,21 @@ static void example_lvgl_flush_cb(
     xSemaphoreGive(sem_gui_ready);
     xSemaphoreTake(sem_vsync_end, portMAX_DELAY);
 #endif
+
+    if((offsetx1 >= offsetx2 + 1) || (offsety1 >= offsety2 + 1)) {
+        ESP_LOGE(TAG, "flush cb err x: %d / %d", offsetx1, offsetx2);
+        ESP_LOGE(TAG, "flush cb err y: %d / %d", offsety1, offsety2);
+    } else {
+        esp_lcd_panel_draw_bitmap(
+            panel_handle,
+            offsetx1,
+            offsety1,
+            offsetx2 + 1,
+            offsety2 + 1,
+            color_map);
+        lv_disp_flush_ready(drv);
+    }
     // pass the draw buffer to the driver
-    esp_lcd_panel_draw_bitmap(
-        panel_handle, offsetx1, offsety1, offsetx2 + 1, offsety2 + 1, color_map);
-    lv_disp_flush_ready(drv);
 }
 
 static void example_increase_lvgl_tick(void* arg) {
