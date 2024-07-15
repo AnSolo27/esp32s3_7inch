@@ -73,6 +73,8 @@ TaskHandle_t hSDCARD_Task = NULL;
 TaskHandle_t hDraw_Task = NULL;
 TaskHandle_t hMCU_UART_Task = NULL;
 
+extern TaskHandle_t gui_task_h;
+
 int sendData(const char* logName, const char* data) {
     const int len = strlen(data);
     const int txBytes = uart_write_bytes(UART_NUM_1, data, len);
@@ -96,7 +98,8 @@ void app_main(void) {
 
     xTaskCreatePinnedToCore(
         Draw_Task, "Draw_Task", 4096, NULL, 11, &hDraw_Task, 1);
-    //xTaskCreatePinnedToCore(WIFI_Task, "WIFI_Task", 4096, NULL, 10, &hWIFI_Task, 0);
+    //xTaskCreatePinnedToCore(
+    //    WIFI_Task, "WIFI_Task", 4096, NULL, 10, &hWIFI_Task, 0);
     //xTaskCreatePinnedToCore(SDCARD_Task, "SDCARD_Task", 4096, NULL, 10, &hSDCARD_Task, 0);
     size_t free_heap = 0;
     int i = 0;
@@ -119,14 +122,34 @@ void app_main(void) {
 
         vTaskDelay(pdMS_TO_TICKS(1000));
         free_heap = xPortGetFreeHeapSize();
-        /*
-        ESP_LOGI(TAG, "rtos free heap %u", free_heap);
 
-        ESP_LOGI(
-            TAG,
-            "uart free heap %u",
-            uxTaskGetStackHighWaterMark(hMCU_UART_Task) * sizeof(StackType_t));
-            */
+        if(free_heap < 10000) {
+            ESP_LOGW(TAG, "rtos free heap %u", free_heap);
+        }
+        if(uxTaskGetStackHighWaterMark(hMCU_UART_Task) * sizeof(StackType_t) <
+           256) {
+            ESP_LOGW(
+                TAG,
+                "uart free heap %u",
+                uxTaskGetStackHighWaterMark(hMCU_UART_Task) *
+                    sizeof(StackType_t));
+        }
+
+        if(uxTaskGetStackHighWaterMark(hDraw_Task) * sizeof(StackType_t) <
+           256) {
+            ESP_LOGW(
+                TAG,
+                "draw free heap %u",
+                uxTaskGetStackHighWaterMark(hDraw_Task) * sizeof(StackType_t));
+        }
+
+        if(uxTaskGetStackHighWaterMark(gui_task_h) * sizeof(StackType_t) <
+           256) {
+            ESP_LOGW(
+                TAG,
+                "gui free heap %u",
+                uxTaskGetStackHighWaterMark(gui_task_h) * sizeof(StackType_t));
+        }
     }
 }
 
