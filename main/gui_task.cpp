@@ -338,7 +338,7 @@ void gui_task(void* pvParameters) {
 
     lv_chart_set_axis_tick(
         objects.process_chart, LV_CHART_AXIS_PRIMARY_Y, 10, 5, 5, 5, true, 40);
-
+    lv_chart_set_point_count(objects.process_chart, 45);
     static lv_chart_series_t* ser_top;
     ser_top = lv_chart_add_series(
         objects.process_chart,
