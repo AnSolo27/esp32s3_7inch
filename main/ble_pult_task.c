@@ -19,6 +19,9 @@
 
 #include "settings.h"
 
+#include "gui_task.h"
+#include "mcu_uart_task.h"
+
 /**********Extern**********/
 //extern QueueHandle_t tx_task_queue;
 /**********LOG**********/
@@ -463,7 +466,7 @@ static int blecent_should_connect(const struct ble_gap_disc_desc* disc) {
 
     char name[32] = {0};
     if(fields.name_len > 0 && fields.mfg_data_len > 0 &&
-       strncmp((char*)fields.name, "test", 4) == 0) {
+       strncmp((char*)fields.name, "v01", 3) == 0) {
         memcpy(name, fields.name, fields.name_len);
 
         MODLOG_DFLT(
@@ -480,22 +483,23 @@ static int blecent_should_connect(const struct ble_gap_disc_desc* disc) {
         int16_t val = (fields.mfg_data[3] << 8) | fields.mfg_data[4];
         uint16_t msg = 0;
 
-        if(is_mac_correct(disc->addr.val)) {
-            if(old_cnt != cnt || val == 0xFFFF) {
-                MODLOG_DFLT(INFO, "val %d", val);
-                old_cnt = cnt;
-                if(val < 100) {
-                    val = 100;
-                }
-                msg = val;
-                //xQueueSend(tx_task_queue, &msg, portMAX_DELAY);
-            } else {
-                //MODLOG_DFLT(INFO, "cnt %d", cnt);
+        //if(is_mac_correct(disc->addr.val)) {
+        if(old_cnt != cnt || val == 0xFFFF) {
+            MODLOG_DFLT(INFO, "val %d btn %u", val, fields.mfg_data[5]);
+            old_cnt = cnt;
+            if(val < 100) {
+                val = 100;
             }
-            //}
+            msg = val;
+            mcu_uart_btn_pressed(0, fields.mfg_data[5], 0);
+            //xQueueSend(tx_task_queue, &msg, portMAX_DELAY);
         } else {
-            MODLOG_DFLT(INFO, "wrong dev");
+            MODLOG_DFLT(INFO, "cnt %d", cnt);
         }
+        //}
+        //} else {
+        //    MODLOG_DFLT(INFO, "wrong dev");
+        //}
         if(to_bind == 1 && val > 4000) {
             settings_save_ble_btn(disc->addr.val);
             to_bind = 0;
@@ -731,7 +735,7 @@ static void ble_pult_task(void* arg) {
         tag, "Install temperature sensor, expected temp ranger range: 10~50 ℃");
     temperature_sensor_handle_t temp_sensor = NULL;
     temperature_sensor_config_t temp_sensor_config =
-        TEMPERATURE_SENSOR_CONFIG_DEFAULT(10, 50);
+        TEMPERATURE_SENSOR_CONFIG_DEFAULT(10, 60);
     ESP_ERROR_CHECK(
         temperature_sensor_install(&temp_sensor_config, &temp_sensor));
 
