@@ -15,6 +15,7 @@ enum main_screen_btn {
     BTN_P_TOP_INC = 3,
     BTN_RUN = 4,
     BTN_PROCESS_FINISH = 5,
+    BTN_CHECK = 6,
     BTN_BLE_UP = 10,
     BTN_BLE_DOWN = 30,
     BTN_BLE_START = 31,

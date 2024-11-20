@@ -15,7 +15,7 @@ void mcu_uart_process_settings(
     uint8_t top_t,
     uint8_t bot_t,
     uint8_t time);
-
+void mcu_uart_check_start(uint8_t time_h);
 #ifdef __cplusplus
 }
 #endif

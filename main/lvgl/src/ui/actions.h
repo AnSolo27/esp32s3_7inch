@@ -10,6 +10,7 @@ extern "C" {
 extern void action_event_btn_main_scr(lv_event_t * e);
 extern void action_event_btn_process_scr(lv_event_t * e);
 extern void action_event_meter_main_bot(lv_event_t * e);
+extern void action_event_btn_check(lv_event_t * e);
 
 
 #ifdef __cplusplus

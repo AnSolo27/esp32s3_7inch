@@ -746,7 +746,7 @@ static void ble_pult_task(void* arg) {
     int cnt = 20;
     float tsens_value;
     while(1) {
-        vTaskDelay(pdMS_TO_TICKS(20000));
+        vTaskDelay(pdMS_TO_TICKS(60000));
         ESP_ERROR_CHECK(
             temperature_sensor_get_celsius(temp_sensor, &tsens_value));
         ESP_LOGI(tag, "Temperature value %.02f ℃", tsens_value);

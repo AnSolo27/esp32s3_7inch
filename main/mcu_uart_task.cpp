@@ -99,12 +99,14 @@ void uart_init(void) {
 
 #define ASP_CMD_GET_FW_VER 0x0
 
-#define DISP_CMD_BTN_H                 0xA0
-#define DISP_CMD_NOTIFY_P              0xA1
-#define DISP_CMD_NOTIFY_T              0xA2
-#define DISP_CMD_PROCESS_SETTINGS      0xA3
-#define DISP_CMD_NOTIFY_TIME_TO_FINISH 0xA4
-#define DISP_CMD_NOTIFY_P_TARGET       0xA5
+#define DISP_CMD_BTN_H                      0xA0
+#define DISP_CMD_NOTIFY_P                   0xA1
+#define DISP_CMD_NOTIFY_T                   0xA2
+#define DISP_CMD_PROCESS_SETTINGS           0xA3
+#define DISP_CMD_NOTIFY_TIME_TO_FINISH      0xA4
+#define DISP_CMD_NOTIFY_P_TARGET            0xA5
+#define DISP_CMD_NOTIFY_TIME_TO_START_CHECK 0xA6
+#define DISP_CMD_CHECK_SETTINGS             0xA7
 /**/
 #define DISP_CMD_CHANGE_SCREEN 0xB0
 
@@ -114,6 +116,7 @@ uint16_t temp_top;
 uint16_t temp_bot;
 
 uint16_t time_to_finish;
+uint16_t time_to_start_check;
 
 void mcu_uart_answer_fw_ver(void) {
     uint8_t tx_buf[] = {
@@ -173,6 +176,15 @@ void mcu_uart_process_settings(
         time,
         0x00,
         0x00};
+    tx_buf[1] = (uint8_t)(sizeof(tx_buf) >> 8);
+    tx_buf[2] = (uint8_t)(sizeof(tx_buf));
+    //get_crc_and_write(tx_buf, sizeof(tx_buf) - 2, &tx_buf[sizeof(tx_buf) - 2]);
+    uart_write_bytes(UART_NUM_1, tx_buf, sizeof(tx_buf));
+}
+
+void mcu_uart_check_start(uint8_t time_h) {
+    uint8_t tx_buf[] = {
+        HEADER_ANSWER, 0x00, 0x00, DISP_CMD_CHECK_SETTINGS, time_h, 0x00, 0x00};
     tx_buf[1] = (uint8_t)(sizeof(tx_buf) >> 8);
     tx_buf[2] = (uint8_t)(sizeof(tx_buf));
     //get_crc_and_write(tx_buf, sizeof(tx_buf) - 2, &tx_buf[sizeof(tx_buf) - 2]);
@@ -279,6 +291,8 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
                         loadScreen(SCREEN_ID_MAIN);
                     } else if(data[4] == 1) {
                         loadScreen(SCREEN_ID_PAGE_PROCESS);
+                    } else if(data[4] == 2) {
+                        loadScreen(SCREEN_ID_PAGE_CHECK);
                     }
                     break;
 
@@ -286,6 +300,15 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
                     time_to_finish = (data[4] << 8) | data[5];
                     lv_label_set_text_fmt(
                         objects.l_time_to_finish, "%u мин", time_to_finish);
+                    break;
+
+                case DISP_CMD_NOTIFY_TIME_TO_START_CHECK:
+                    ESP_LOGI(TAG, "DISP_CMD_NOTIFY_TIME_TO_START_CHECK");
+                    time_to_start_check = (data[4] << 8) | data[5];
+                    lv_label_set_text_fmt(
+                        objects.l_time_to_start_check,
+                        "Через : %u мин",
+                        time_to_start_check);
                     break;
                 }
             }

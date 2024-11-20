@@ -46,7 +46,7 @@ static void event_handler_cb_main_meter_p_bot(lv_event_t* e) {
 
 static void event_handler_cb_main_meter_p_top(lv_event_t* e) {
     lv_event_code_t event = lv_event_get_code(e);
-    if(event == LV_EVENT_DRAW_PART_BEGIN) {
+    if(event == LV_EVENT_VALUE_CHANGED) {
         action_event_meter_main_bot(e);
     }
 }
@@ -54,6 +54,20 @@ static void event_handler_cb_main_meter_p_top(lv_event_t* e) {
 static void event_handler_cb_main_main_time_arc(lv_event_t* e) {
     lv_event_code_t event = lv_event_get_code(e);
     if(event == LV_EVENT_VALUE_CHANGED) {
+        action_event_btn_main_scr(e);
+    }
+}
+
+static void event_handler_cb_main_btn_main_check(lv_event_t* e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    if(event == LV_EVENT_RELEASED) {
+        action_event_btn_main_scr(e);
+    }
+}
+
+static void event_handler_cb_main_obj1(lv_event_t* e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    if(event == LV_EVENT_PRESSED) {
         action_event_btn_main_scr(e);
     }
 }
@@ -72,10 +86,31 @@ static void event_handler_cb_page_process_btn_process_stop(lv_event_t* e) {
     }
 }
 
-static void event_handler_cb_page_process_obj1(lv_event_t* e) {
+static void event_handler_cb_page_process_obj2(lv_event_t* e) {
     lv_event_code_t event = lv_event_get_code(e);
     if(event == LV_EVENT_PRESSED) {
         action_event_btn_process_scr(e);
+    }
+}
+
+static void event_handler_cb_page_check_page_check(lv_event_t* e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    if(event == LV_EVENT_SCREEN_LOADED) {
+        action_event_btn_check(e);
+    }
+}
+
+static void event_handler_cb_page_check_btn_check_stop(lv_event_t* e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    if(event == LV_EVENT_RELEASED) {
+        action_event_btn_check(e);
+    }
+}
+
+static void event_handler_cb_page_check_obj3(lv_event_t* e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    if(event == LV_EVENT_PRESSED) {
+        action_event_btn_check(e);
     }
 }
 
@@ -236,7 +271,7 @@ void create_screen_main() {
         }
         {
             lv_obj_t* obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 310, 15);
+            lv_obj_set_pos(obj, 309, 3);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Настройка");
             lv_obj_set_style_text_font(
@@ -246,7 +281,7 @@ void create_screen_main() {
             // btn_main_run
             lv_obj_t* obj = lv_btn_create(parent_obj);
             objects.btn_main_run = obj;
-            lv_obj_set_pos(obj, 339, 416);
+            lv_obj_set_pos(obj, 319, 353);
             lv_obj_set_size(obj, 100, 50);
             lv_obj_add_event_cb(
                 obj, event_handler_cb_main_btn_main_run, LV_EVENT_ALL, 0);
@@ -256,7 +291,7 @@ void create_screen_main() {
         {
             lv_obj_t* obj = lv_label_create(parent_obj);
             objects.obj0 = obj;
-            lv_obj_set_pos(obj, 365, 431);
+            lv_obj_set_pos(obj, 345, 368);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Запуск");
             lv_obj_add_event_cb(
@@ -293,7 +328,7 @@ void create_screen_main() {
         }
         {
             lv_obj_t* obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 630, 1);
+            lv_obj_set_pos(obj, 647, 3);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "IN");
             lv_obj_set_style_text_font(
@@ -301,7 +336,7 @@ void create_screen_main() {
         }
         {
             lv_obj_t* obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 76, 15);
+            lv_obj_set_pos(obj, 81, 15);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "OUT");
             lv_obj_set_style_text_font(
@@ -311,7 +346,7 @@ void create_screen_main() {
             // meter_p_top
             lv_obj_t* obj = lv_meter_create(parent_obj);
             objects.meter_p_top = obj;
-            lv_obj_set_pos(obj, 31, 76);
+            lv_obj_set_pos(obj, 19, 67);
             lv_obj_set_size(obj, 180, 180);
             {
                 lv_meter_scale_t* scale = lv_meter_add_scale(obj);
@@ -338,7 +373,7 @@ void create_screen_main() {
             // main_time_arc
             lv_obj_t* obj = lv_arc_create(parent_obj);
             objects.main_time_arc = obj;
-            lv_obj_set_pos(obj, 297, 76);
+            lv_obj_set_pos(obj, 298, 61);
             lv_obj_set_size(obj, 203, 192);
             lv_arc_set_value(obj, 25);
             lv_arc_set_bg_end_angle(obj, 60);
@@ -349,7 +384,7 @@ void create_screen_main() {
             // check_b_sensor_top
             lv_obj_t* obj = lv_checkbox_create(parent_obj);
             objects.check_b_sensor_top = obj;
-            lv_obj_set_pos(obj, 288, 279);
+            lv_obj_set_pos(obj, 289, 256);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_checkbox_set_text(obj, "Датчик OUT");
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
@@ -360,7 +395,7 @@ void create_screen_main() {
             // check_b_sensor_bot
             lv_obj_t* obj = lv_checkbox_create(parent_obj);
             objects.check_b_sensor_bot = obj;
-            lv_obj_set_pos(obj, 288, 338);
+            lv_obj_set_pos(obj, 289, 306);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_checkbox_set_text(obj, "Датчик IN");
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
@@ -371,11 +406,65 @@ void create_screen_main() {
             // l_main_time
             lv_obj_t* obj = lv_label_create(parent_obj);
             objects.l_main_time = obj;
-            lv_obj_set_pos(obj, 334, 146);
+            lv_obj_set_pos(obj, 335, 131);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "100 мин");
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_48, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            // btn_main_check
+            lv_obj_t* obj = lv_btn_create(parent_obj);
+            objects.btn_main_check = obj;
+            lv_obj_set_pos(obj, 239, 418);
+            lv_obj_set_size(obj, 100, 50);
+            lv_obj_add_event_cb(
+                obj, event_handler_cb_main_btn_main_check, LV_EVENT_ALL, 0);
+            lv_obj_add_flag(obj, LV_OBJ_FLAG_SCROLL_ON_FOCUS);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+        }
+        {
+            lv_obj_t* obj = lv_label_create(parent_obj);
+            objects.obj1 = obj;
+            lv_obj_set_pos(obj, 257, 433);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Проверка");
+            lv_obj_add_event_cb(
+                obj, event_handler_cb_main_obj1, LV_EVENT_ALL, 0);
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            // l_h_check
+            lv_obj_t* obj = lv_label_create(parent_obj);
+            objects.l_h_check = obj;
+            lv_obj_set_pos(obj, 400, 429);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "1 ч.");
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            // btn_h_inc
+            lv_obj_t* obj = lv_imgbtn_create(parent_obj);
+            objects.btn_h_inc = obj;
+            lv_obj_set_pos(obj, 444, 426);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, 40);
+            lv_imgbtn_set_src(
+                obj, LV_IMGBTN_STATE_RELEASED, NULL, &img_plus, NULL);
+            lv_imgbtn_set_src(
+                obj, LV_IMGBTN_STATE_PRESSED, NULL, &img_plus_pressed, NULL);
+        }
+        {
+            // btn_h_dec
+            lv_obj_t* obj = lv_imgbtn_create(parent_obj);
+            objects.btn_h_dec = obj;
+            lv_obj_set_pos(obj, 354, 426);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, 40);
+            lv_imgbtn_set_src(
+                obj, LV_IMGBTN_STATE_RELEASED, NULL, &img_minus, NULL);
+            lv_imgbtn_set_src(
+                obj, LV_IMGBTN_STATE_PRESSED, NULL, &img_minus_pressed, NULL);
         }
     }
 }
@@ -459,12 +548,12 @@ void create_screen_page_process() {
         }
         {
             lv_obj_t* obj = lv_label_create(parent_obj);
-            objects.obj1 = obj;
+            objects.obj2 = obj;
             lv_obj_set_pos(obj, 383, 429);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Стоп");
             lv_obj_add_event_cb(
-                obj, event_handler_cb_page_process_obj1, LV_EVENT_ALL, 0);
+                obj, event_handler_cb_page_process_obj2, LV_EVENT_ALL, 0);
             lv_obj_set_style_text_font(
                 obj, &ui_font_gost_20, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
@@ -527,6 +616,67 @@ void create_screen_page_process() {
 void tick_screen_page_process() {
 }
 
+void create_screen_page_check() {
+    lv_obj_t* obj = lv_obj_create(0);
+    objects.page_check = obj;
+    lv_obj_set_pos(obj, 0, 0);
+    lv_obj_set_size(obj, 800, 480);
+    lv_obj_add_event_cb(
+        obj, event_handler_cb_page_check_page_check, LV_EVENT_ALL, 0);
+    lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+    {
+        lv_obj_t* parent_obj = obj;
+        {
+            // btn_check_stop
+            lv_obj_t* obj = lv_btn_create(parent_obj);
+            objects.btn_check_stop = obj;
+            lv_obj_set_pos(obj, 350, 384);
+            lv_obj_set_size(obj, 100, 50);
+            lv_obj_add_event_cb(
+                obj,
+                event_handler_cb_page_check_btn_check_stop,
+                LV_EVENT_ALL,
+                0);
+            lv_obj_add_flag(obj, LV_OBJ_FLAG_SCROLL_ON_FOCUS);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            lv_obj_set_style_bg_color(
+                obj, lv_color_hex(0xfff32121), LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            lv_obj_t* obj = lv_label_create(parent_obj);
+            objects.obj3 = obj;
+            lv_obj_set_pos(obj, 383, 399);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Стоп");
+            lv_obj_add_event_cb(
+                obj, event_handler_cb_page_check_obj3, LV_EVENT_ALL, 0);
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            lv_obj_t* obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 324, 12);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Проверка");
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_48, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            // l_time_to_start_check
+            lv_obj_t* obj = lv_label_create(parent_obj);
+            objects.l_time_to_start_check = obj;
+            lv_obj_set_pos(obj, 221, 188);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Осталось : 120 мин");
+            lv_obj_set_style_text_font(
+                obj, &ui_font_gost_48, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+    }
+}
+
+void tick_screen_page_check() {
+}
+
 void create_screens() {
     lv_disp_t* dispp = lv_disp_get_default();
     lv_theme_t* theme = lv_theme_default_init(
@@ -539,6 +689,7 @@ void create_screens() {
 
     create_screen_main();
     create_screen_page_process();
+    create_screen_page_check();
 }
 
 typedef void (*tick_screen_func_t)();
@@ -546,6 +697,7 @@ typedef void (*tick_screen_func_t)();
 tick_screen_func_t tick_screen_funcs[] = {
     tick_screen_main,
     tick_screen_page_process,
+    tick_screen_page_check,
 };
 
 void tick_screen(int screen_index) {

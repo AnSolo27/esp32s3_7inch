@@ -71,7 +71,7 @@ typedef struct sensor_val {
 
 class Sensor_P {
 public:
-    Sensor_P(){};
+    Sensor_P() {};
     void set(uint8_t new_val) {
         val_u8 = new_val;
         val_f = val_u8 / 10.0f;
@@ -97,7 +97,7 @@ private:
 
 class Sensor_T {
 public:
-    Sensor_T(){};
+    Sensor_T() {};
     void set(int32_t new_val) {
         if(new_val > max_val) {
             val = max_val;
@@ -133,6 +133,8 @@ Sensor_P P_Bot;
 
 Sensor_P P_OUT_target;
 Sensor_P P_IN_target;
+
+uint8_t check_mode_h = 1;
 
 //LV_EVENT_DRAW_PART_BEGIN
 //event_handler_cb_main_meter_p_bot
@@ -181,6 +183,18 @@ void action_event_btn_main_scr(lv_event_t* e) {
             objects.l_main_time,
             "%d мин",
             lv_arc_get_value(objects.main_time_arc) * 2);
+    } else if(obj == objects.btn_main_check) {
+        mcu_uart_btn_pressed(0, BTN_CHECK, 0);
+    }
+}
+
+void action_event_btn_check(lv_event_t* e) {
+    lv_obj_t* obj = lv_event_get_target(e);
+    if(obj == objects.page_check) {
+        ESP_LOGI(TAG, "Page check loaded");
+        mcu_uart_check_start(check_mode_h);
+    } else if(obj == objects.btn_check_stop) {
+        mcu_uart_btn_pressed(0, BTN_PROCESS_FINISH, 0);
     }
 }
 
@@ -244,6 +258,24 @@ static void custom_events_cb_main_t_btns(lv_event_t* e) {
         T_Bot_target.set(T_Bot_target.get_val() - 1);
         lv_label_set_text_fmt(
             objects.l_temp_in_target, "%ld", T_Bot_target.get_val());
+    }
+    //hours
+    else if(obj == objects.btn_h_inc) {
+        ESP_LOGI(TAG, "btn_h_inc");
+        if(check_mode_h >= 24) {
+            check_mode_h = 24;
+        } else {
+            check_mode_h++;
+        }
+        lv_label_set_text_fmt(objects.l_h_check, "%u ч.", check_mode_h);
+    } else if(obj == objects.btn_h_dec) {
+        ESP_LOGI(TAG, "btn_h_dec");
+        if(check_mode_h == 0) {
+            check_mode_h = 0;
+        } else {
+            check_mode_h--;
+        }
+        lv_label_set_text_fmt(objects.l_h_check, "%u ч.", check_mode_h);
     }
 }
 
@@ -377,6 +409,12 @@ void gui_task(void* pvParameters) {
         objects.btn_t_in_inc, custom_events_cb_main_t_btns, LV_EVENT_ALL, 0);
     lv_obj_add_event_cb(
         objects.btn_t_in_dec, custom_events_cb_main_t_btns, LV_EVENT_ALL, 0);
+
+    lv_obj_add_event_cb(
+        objects.btn_h_dec, custom_events_cb_main_t_btns, LV_EVENT_ALL, 0);
+
+    lv_obj_add_event_cb(
+        objects.btn_h_inc, custom_events_cb_main_t_btns, LV_EVENT_ALL, 0);
 
     for(;;) {
         tick_screen(0);
