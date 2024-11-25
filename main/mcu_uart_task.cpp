@@ -107,6 +107,7 @@ void uart_init(void) {
 #define DISP_CMD_NOTIFY_P_TARGET            0xA5
 #define DISP_CMD_NOTIFY_TIME_TO_START_CHECK 0xA6
 #define DISP_CMD_CHECK_SETTINGS             0xA7
+#define DISP_CMD_CHECK_HEAT                 0xA8
 /**/
 #define DISP_CMD_CHANGE_SCREEN 0xB0
 
@@ -315,6 +316,11 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
 
                 case DISP_CMD_RESET:
                     esp_cpu_reset(0);
+                    break;
+
+                case DISP_CMD_CHECK_HEAT:
+                    lv_label_set_text_fmt(
+                        objects.l_time_to_start_check, "Нагрев");
                     break;
                 }
             }
