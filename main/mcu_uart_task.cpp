@@ -110,6 +110,8 @@ void uart_init(void) {
 /**/
 #define DISP_CMD_CHANGE_SCREEN 0xB0
 
+#define DISP_CMD_RESET 0xC0
+
 #define DISPLAY_MIN_MSG_SIZE 6U
 
 uint16_t temp_top;
@@ -309,6 +311,10 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
                         objects.l_time_to_start_check,
                         "Через : %u мин",
                         time_to_start_check);
+                    break;
+
+                case DISP_CMD_RESET:
+                    esp_cpu_reset(0);
                     break;
                 }
             }
