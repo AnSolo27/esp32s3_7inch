@@ -320,7 +320,10 @@ void mcu_uart_handle_msg(uint8_t* data, uint32_t len) {
 
                 case DISP_CMD_CHECK_HEAT:
                     lv_label_set_text_fmt(
-                        objects.l_time_to_start_check, "Нагрев");
+                        objects.l_time_to_start_check,
+                        "Нагрев Верх %d / Низ %d",
+                        temp_top / 10,
+                        temp_bot / 10);
                     break;
                 }
             }
